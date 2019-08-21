@@ -1,15 +1,15 @@
 import os
 from flask import Flask, request, render_template
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_uploads import configure_uploads
 from flask_bootstrap import Bootstrap
 from azure.storage.blob import BlockBlobService
+from config import Config
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["UPLOADED_PHOTOS_DEST"] = "static/img"
-    app.config["photos"] = UploadSet("photos", IMAGES)
-    configure_uploads(app, app.config["photos"])
+    app.config.from_object(Config)
+    configure_uploads(app, app.config["PHOTOS"])
     bootstrap = Bootstrap(app)
 
     return app
@@ -23,7 +23,7 @@ def index():
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     if request.method == "POST" and "photo" in request.files:
-        filename = app.config["photos"].save(request.files["photo"])
+        filename = app.config["PHOTOS"].save(request.files["photo"])
         try:
             image = os.path.join(app.config["UPLOADED_PHOTOS_DEST"], filename)
             _upload_to_blob(image=image)
