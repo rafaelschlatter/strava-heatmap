@@ -30,12 +30,10 @@ def upload():
         try:
             image = os.path.join(app.config["UPLOADED_PHOTOS_DEST"], filename)
             _upload_to_blob(image=image)
-            
+            return render_template("upload_success.html")
         except Exception as e:
             print("Failed to save image to blob storage.")
             print(e)
-
-        return filename
     return render_template("upload.html")
 
 
@@ -47,9 +45,12 @@ def process():
         )
     block_blob_service.get_blob_to_path(container_name="imageinput", blob_name="test_separator.png", file_path=os.path.join(app.config["TEMP_DIR"], "test_separator.png"))
 
-    
     return render_template("base.html")
 
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("500.html")
 
 def _upload_to_blob(image):
     block_blob_service = BlockBlobService(
