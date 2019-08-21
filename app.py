@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_bootstrap import Bootstrap
 from azure.storage.blob import BlockBlobService
 
 
@@ -9,6 +10,7 @@ def create_app():
     app.config["UPLOADED_PHOTOS_DEST"] = "static/img"
     app.config["photos"] = UploadSet("photos", IMAGES)
     configure_uploads(app, app.config["photos"])
+    bootstrap = Bootstrap(app)
 
     return app
 
@@ -16,7 +18,7 @@ app = create_app()
 
 @app.route("/")
 def index():
-    return render_template("base.html")
+    return render_template("index.html")
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
