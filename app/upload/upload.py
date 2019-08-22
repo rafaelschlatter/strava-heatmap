@@ -1,6 +1,5 @@
 import os
 from flask import request, render_template, current_app
-from azure.storage.blob import BlockBlobService
 from app.upload import upload_bp
 
 
@@ -10,7 +9,7 @@ def upload():
         filename = current_app.config["PHOTOS"].save(request.files["photo"])
         try:
             image = os.path.join(current_app.config["UPLOADED_PHOTOS_DEST"], filename)
-            _upload_to_blob(image=image)
+            _upload_to_blob(image=image, block_blob_service=current_app.config["BLOCK_BLOB_SERVICE"])
             return render_template("upload_success.html")
         except Exception as e:
             print("Failed to save image to blob storage.")
@@ -18,10 +17,7 @@ def upload():
     return render_template("upload.html")
 
 
-def _upload_to_blob(image):
-    block_blob_service = BlockBlobService(
-        account_name=os.environ["STORAGE_ACCOUNT"], account_key=os.environ["BLOB_KEY1"]
-    )
+def _upload_to_blob(image, block_blob_service):
     blob_name = os.path.basename(image)
     file_path = image
     block_blob_service.create_blob_from_path(
