@@ -11,15 +11,18 @@ def process():
         block_blob_service=current_app.config["BLOCK_BLOB_SERVICE"]
     )
     form = ProcessForm()
-    form.selection.choices = [(index, name) for index, name in enumerate(blob_names)]
+    choices = [(index, name) for index, name in enumerate(blob_names)]
+    if len(choices) == 0 or choices == None:
+        flash("No images uploaded yet. You need to upload an image before you can process it.", "danger")
+    form.selection.choices = choices
 
     if form.validate_on_submit():
         image = dict(form.selection.choices).get(form.selection.data)
-        filepath = os.path.join(current_app.config["TEMP_DIR"], str(image)
+        filepath = os.path.join(current_app.config["TEMP_DIR"], str(image))
         current_app.config["BLOCK_BLOB_SERVICE"].get_blob_to_path(
             container_name="imageinput",
             blob_name=str(image),
-            file_path=filepath),
+            file_path=filepath,
         )
 
         image_for_processing = filepath
