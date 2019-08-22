@@ -1,19 +1,23 @@
 import os
-from flask import request, render_template, current_app
+from flask import request, render_template, current_app, flash, redirect, url_for
 from app.upload import upload_bp
 
 
 @upload_bp.route("/upload", methods=["GET", "POST"])
 def upload():
     if request.method == "POST" and "photo" in request.files:
-        filename = current_app.config["PHOTOS"].save(request.files["photo"])
         try:
+            filename = current_app.config["PHOTOS"].save(request.files["photo"])
             image = os.path.join(current_app.config["UPLOADED_PHOTOS_DEST"], filename)
-            _upload_to_blob(image=image, block_blob_service=current_app.config["BLOCK_BLOB_SERVICE"])
-            return render_template("upload_success.html")
+            _upload_to_blob(
+                image=image, block_blob_service=current_app.config["BLOCK_BLOB_SERVICE"]
+            )
+            flash("Uploaded image successfully to Azure blob storage.", "success")
+            return redirect(url_for("upload.upload"))
         except Exception as e:
-            print("Failed to save image to blob storage.")
-            print(e)
+            flash("Failed to save image to blob storage.", "danger")
+            return redirect(url_for("upload.upload"))
+
     return render_template("upload.html")
 
 
