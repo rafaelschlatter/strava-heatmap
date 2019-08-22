@@ -20,11 +20,10 @@ def upload():
 
 def _upload_to_blob(image):
     block_blob_service = BlockBlobService(
-            account_name=os.environ["STORAGE_ACCOUNT"],
-            account_key=os.environ["BLOB_KEY1"],
-        )
+        account_name=os.environ["STORAGE_ACCOUNT"], account_key=os.environ["BLOB_KEY1"]
+    )
     blob_name = os.path.basename(image)
     file_path = image
     block_blob_service.create_blob_from_path(
-            container_name="imageinput", blob_name=blob_name, file_path=file_path
-        )
+        container_name="imageinput", blob_name=blob_name, file_path=file_path
+    )
