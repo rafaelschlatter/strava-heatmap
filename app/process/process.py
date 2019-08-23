@@ -2,6 +2,7 @@ import os
 from flask import render_template, current_app, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField
+from wtforms.validators import DataRequired
 from app.process import process_bp
 
 
