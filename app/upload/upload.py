@@ -1,8 +1,10 @@
 import os
-from flask import request, render_template, current_app, flash, redirect, url_for
+from flask import render_template, current_app, flash, redirect, url_for
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import FileField, SubmitField
 from app.upload import upload_bp
+from flask_uploads import UploadSet, IMAGES
 
 
 @upload_bp.route("/upload", methods=["GET", "POST"])
@@ -34,5 +36,13 @@ def _upload_to_blob(image, block_blob_service):
 
 
 class UploadForm(FlaskForm):
-    file = FileField(label="Select a file")
+    file = FileField(
+        label="Select a file",
+        validators=[
+            FileRequired(),
+            FileAllowed(
+                UploadSet("photos", IMAGES), "Only image uploads are supported."
+            ),
+        ],
+    )
     submit = SubmitField(label="Upload image")
