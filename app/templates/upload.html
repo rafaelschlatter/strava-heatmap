@@ -1,14 +1,14 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <div>
-        <p>
-            Upload an image of a P&ID on which you want to identify senors.
-        </p>
-        <form method=POST enctype=multipart/form-data action="{{ url_for('upload.upload') }}">
-            <input type=file name=photo autocomplete="off" required>
-            <input type="submit" value="Upload image">
-        </form>
+        Upload an image of a P&ID on which you want to identify senors.
+    </div>
+    <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form=form, method="POST", action=url_for("upload.upload"), enctype="multipart/form-data") }}
+            </div>
     </div>
 {% endblock %}
 
