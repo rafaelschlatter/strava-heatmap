@@ -13,26 +13,27 @@ def process():
     form = ProcessForm()
     choices = [(index, name) for index, name in enumerate(blob_names)]
     if len(choices) == 0 or choices == None:
-        flash("No images uploaded yet. You need to upload an image before you can process it.", "danger")
+        flash(
+            "No images uploaded yet. You need to upload an image before you can process it.",
+            "danger",
+        )
     form.selection.choices = choices
 
     if form.validate_on_submit():
         image = dict(form.selection.choices).get(form.selection.data)
         filepath = os.path.join(current_app.config["TEMP_DIR"], str(image))
         current_app.config["BLOCK_BLOB_SERVICE"].get_blob_to_path(
-            container_name="imageinput",
-            blob_name=str(image),
-            file_path=filepath,
+            container_name="imageinput", blob_name=str(image), file_path=filepath
         )
 
         image_for_processing = filepath
         # Here needs to come the call to run() method from the algorithm class engineering-drawing-cv
-        # The image above 
+        # The image above
 
         flash("Image processed successfully.", "success")
         return redirect(url_for("process.process"))
 
-    return render_template("process_form.html", form=form)
+    return render_template("process.html", form=form)
 
 
 def _list_images(block_blob_service):

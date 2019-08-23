@@ -3,17 +3,18 @@
 
 {% block page_title %}
 <h3>
-    Upload image
+    Process image
 </h3>
 {% endblock %}
 
 {% block app_content %}
-<div>
-    Upload an image of a P&ID on which you want to identify senors.
-</div>
+<p>
+    The dropdown lists all images stored in the Azure blob container. Select an image that you want to process through
+    the computer vision engine.
+</p>
 <div class="row">
     <div class="col-md-4">
-        {{ wtf.quick_form(form=form, method="POST", action=url_for("upload.upload"), enctype="multipart/form-data") }}
+        {{ wtf.quick_form(form) }}
     </div>
 </div>
 {% endblock %}
