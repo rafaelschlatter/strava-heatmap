@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+<h3>
+    Connect to your Strava account
+</h3>
+{% endblock %}
+
+{% block app_content %}
+<div class="well">
+    <h1>Login using Strava</h1>
+    <p class="lead">
+    	Authenticate using your Strava account.
+	</p>
+	<p><a class="btn btn-lg" href="{{ authorize_url }}" role="button"><img src="/static/ConnectWithStrava.png" border="0"/></a></p>
+</div>
+{% endblock %}

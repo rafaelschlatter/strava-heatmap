@@ -4,4 +4,4 @@ env
 .vscode
 .env
 *.pyc
-.pycache
+*__pycache__
