@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+<h3>
+    Home
+</h3>
+{% endblock %}
+
+{% block app_content %}
+<h1>Authorization Results</h1>
+<p>
+	Hi, <strong>{{ athlete.firstname }}</strong>.
+
+  Your access token:
+  <pre>{{ access_token|tojson(indent=2) }}</pre>
+</p>
+{% endblock %}
