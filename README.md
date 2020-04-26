@@ -4,3 +4,11 @@
 
 ## About
 A flask web app to create heatmaps from GSP data from Strava activities.
+
+## Build
+Build and push the Docker image:
+````
+docker login
+docker build -t rafaelschlatter/stravaheatmap:0.1 .
+docker push rafaelschlatter/stravaheatmap:0.1
+````
