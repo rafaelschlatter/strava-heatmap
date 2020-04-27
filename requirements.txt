@@ -1,2 +1,4 @@
 ﻿Flask==1.1.1
 stravalib==0.10.2
+folium==0.10.1
+branca==0.3.1

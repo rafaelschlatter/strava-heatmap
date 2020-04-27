@@ -1,0 +1,26 @@
+trigger:
+  - master
+  - dev
+  
+pool:
+  vmImage: 'ubuntu-latest'
+strategy:
+  matrix:
+    Python36:
+      python.version: '3.6'
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Use Python $(python.version)'
+  inputs:
+    versionSpec: '$(python.version)'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- script: |
+    python scripts/create_heatmap.py
+  displayName: 'Build html heatmap'
+
