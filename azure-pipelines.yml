@@ -24,3 +24,14 @@ steps:
     python scripts/create_heatmap.py
   displayName: 'Build html heatmap'
 
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker-connection'
+    repository: 'rafaelschlatter/stravaheatmap'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
