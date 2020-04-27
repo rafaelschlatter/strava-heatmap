@@ -1,5 +1,6 @@
 venv
 env
+notebooks
 .DS_Store
 .vscode
 .env
