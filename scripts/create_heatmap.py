@@ -31,4 +31,4 @@ macro._template = Template(template)
 
 m.get_root().add_child(macro)
 
-m.save('../app/templates/heatmap.html')
+m.save('app/templates/heatmap.html')
