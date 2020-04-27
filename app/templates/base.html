@@ -3,7 +3,8 @@
       <div class="inner">
         <a class="navbar-right" href="#"><img src="/static/api_logo_pwrdBy_strava_stack_white.png" alt=""></a>
         <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link active" href="#">Home</a>
+          <a class="nav-link active" href="{{ url_for('index.index') }}">Home</a>
+          <a class="nav-link" href="{{ url_for('heatmap.heatmap') }}">Map</a>
           <a class="nav-link" href="#">Tutorial</a>
           <a class="nav-link" href="{{ url_for('contact.contact') }}">Contact</a>
         </nav>
