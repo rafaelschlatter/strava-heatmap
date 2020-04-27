@@ -2,6 +2,7 @@ from flask import Flask
 from app.config import Config
 from app.index import index_bp
 from app.contact import contact_bp
+from app.heatmap import heatmap_bp
 
 
 def create_app():
@@ -9,5 +10,6 @@ def create_app():
     app.config.from_object(Config)
     app.register_blueprint(index_bp)
     app.register_blueprint(contact_bp)
+    app.register_blueprint(heatmap_bp)
 
     return app
