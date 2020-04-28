@@ -18,8 +18,8 @@ pip install -r requirements.txt
 Build and push the Docker image:
 ````
 docker login
-docker build -t rafaelschlatter/stravaheatmap:0.1 .
-docker push rafaelschlatter/stravaheatmap:0.1
+docker build -t rafaelschlatter/stravaheatmap:latest .
+docker push rafaelschlatter/stravaheatmap:latest
 ````
 
 ## Host it on an Azure container instance
