@@ -38,6 +38,14 @@ body {
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
 
+body {
+  background: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
 .cover-container {
   max-width: 42em;
 }
