@@ -1,50 +1,25 @@
-{% extends 'bootstrap/base.html' %}
-
-{% block title %}
-Strava heat map
-{% endblock %}
-
-{% block navbar %}
-<nav class="navbar navbar-inverse">
-    <div class="container">
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
         <a class="navbar-right" href="#"><img src="/static/api_logo_pwrdBy_strava_stack_white.png" alt=""></a>
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ url_for('index.index') }}">Strava heatmaps</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('index.index') }}">Home</a></li>
-                <li><a href="{{ url_for('oauth.login') }}">Login</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-{% endblock %}
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="{{ url_for('index.index') }}">Home</a>
+          <a class="nav-link" href="{{ url_for('heatmap.heatmap') }}">Map</a>
+          <a class="nav-link" href="#">Tutorial</a>
+          <a class="nav-link" href="{{ url_for('contact.contact') }}">Contact</a>
+        </nav>
+      </div>
+    </header>
+  
+    <link href=https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/cover.css') }}">
 
-{% block content %}
-<div class="container">
-    {% block page_title %}{% endblock %}
-    <hr class="my-4">
-    {% block app_content %}{% endblock %}
-    <hr class="my-4">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
-        <!-- <strong>Title</strong> --> {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-</div>
-{% endblock %}
+    {% block content %}{% endblock %}
+  
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      </div>
+    </footer>
+  </div>
