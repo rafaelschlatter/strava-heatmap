@@ -4,6 +4,7 @@ from app.index import index_bp
 from app.contact import contact_bp, mail
 from app.heatmap import heatmap_bp
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
