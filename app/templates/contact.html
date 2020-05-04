@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main role="main" class="inner cover">
-  <p class="lead">"Hello, this is me."</p>
-</main>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+      <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address.">
+    </div>
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+    </div>						   
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+{% endblock %}
+
+{% block flash %}
+  <div id="bottom">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+  {% for message in messages %}
+      {% if "Error" not in message[1]: %}
+          <div class="alert alert-info">
+          <strong>Success! </strong> {{ message[1] }}
+          </div>
+      {% endif %}
+
+      {% if "Error" in message[1]: %}
+          <div class="alert alert-danger">
+          <strong>Error: </strong> {{ message[1] }}
+          </div>
+      {% endif %}
+  {% endfor %}
+      {% endif %}
+  {% endwith %}
+  </div>
 {% endblock %}

@@ -1,4 +1,6 @@
 ﻿Flask==1.1.1
+Flask-WTF==0.14.3
+Flask-Mail==0.9.1
 stravalib==0.10.2
 folium==0.10.1
 branca==0.3.1
