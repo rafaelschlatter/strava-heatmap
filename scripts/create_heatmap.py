@@ -5,10 +5,10 @@ from branca.element import Template, MacroElement
 
 m = folium.Map(
     name="Strava Heatmap",
-    tiles='cartodbpositron',
+    tiles="cartodbpositron",
     location=[61.91, 10.76],
     zoom_start=5.3,
-    control_scale=True
+    control_scale=True,
 )
 
 template = """
@@ -31,4 +31,4 @@ macro._template = Template(template)
 
 m.get_root().add_child(macro)
 
-m.save('app/templates/heatmap.html')
+m.save("app/templates/heatmap.html")

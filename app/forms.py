@@ -2,6 +2,6 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 
 
 class ContactForm(Form):
-    name = TextField('Name', validators=[validators.required()])
-    email = TextField('Email', validators=[validators.required()])
-    message = TextField('Message', validators=[validators.required()])
+    name = TextField("Name", validators=[validators.required()])
+    email = TextField("Email", validators=[validators.required()])
+    message = TextField("Message", validators=[validators.required()])

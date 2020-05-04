@@ -4,27 +4,26 @@ from app.contact import contact_bp, mail
 from app.forms import ContactForm
 
 
-
-@contact_bp.route("/contact", methods=['GET', 'POST'])
+@contact_bp.route("/contact", methods=["GET", "POST"])
 def contact():
 
     form = ContactForm(request.form)
-    if request.method == 'POST':
-        name=request.form['name']
-        email=request.form['email']
-        message=request.form["message"]
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        message = request.form["message"]
 
         if form.validate():
             msg = Message(
-                subject='Heatmap feedback from {}'.format(name),
+                subject="Heatmap feedback from {}".format(name),
                 sender=email,
-                recipients=[current_app.config["MAIL_USERNAME"]]
+                recipients=[current_app.config["MAIL_USERNAME"]],
             )
             msg.body = message
             mail.send(msg)
-            flash('Thank you, {}. Your message has been sent.'.format(name))
+            flash("Thank you, {}. Your message has been sent.".format(name))
 
         else:
-            flash('All Fields are Required')
+            flash("All Fields are Required")
 
-    return render_template('contact.html', form=form)
+    return render_template("contact.html", form=form)
