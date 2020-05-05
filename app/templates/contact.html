@@ -6,15 +6,24 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+      {% for error in form.name.errors %}
+        <small style="color: red;">{{ error }}</small>
+      {% endfor %}
     </div>
     <div class="form-group">
       <label for="email">Email</label>
       <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address.">
       <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
+      {% for error in form.email.errors %}
+        <small style="color: red;">{{ error }}</small>
+      {% endfor %}
     </div>
     <div class="form-group">
       <label for="message">Message</label>
       <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+      {% for error in form.message.errors %}
+        <small style="color: red;">{{ error }}</small>
+      {% endfor %}
     </div>						   
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
