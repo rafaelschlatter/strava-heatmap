@@ -1,7 +1,8 @@
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
+from wtforms import Form, StringField
+from wtforms.validators import InputRequired
 
 
 class ContactForm(Form):
-    name = TextField("Name", validators=[validators.required()])
-    email = TextField("Email", validators=[validators.required()])
-    message = TextField("Message", validators=[validators.required()])
+    name = StringField("Name", validators=[InputRequired()])
+    email = StringField("Email", validators=[InputRequired()])
+    message = StringField("Message", validators=[InputRequired()])

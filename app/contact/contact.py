@@ -21,9 +21,9 @@ def contact():
             )
             msg.body = message
             mail.send(msg)
-            flash("Thank you, {}. Your message has been sent.".format(name))
+            flash("Thank you, {}. Your message has been sent.".format(name),"success")
 
         else:
-            flash("All Fields are Required")
+            flash("All Fields are Required", "danger")
 
     return render_template("contact.html", form=form)
