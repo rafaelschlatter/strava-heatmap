@@ -10,7 +10,7 @@ strategy:
       python.version: '3.6'
 
 variables:
-  STRAVA_ACCESS_TOKEN: $(STRAVA_ACCESS_TOKEN)
+  ENV_STRAVA_ACCESS_TOKEN: $(STRAVA_ACCESS_TOKEN)
 
 steps:
 - task: UsePythonVersion@0
