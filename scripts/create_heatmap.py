@@ -5,7 +5,7 @@ from stravaio import strava_oauth2
 from branca.element import Template, MacroElement
 
 
-client = StravaIO(access_token=os.environ["STRAVA_ACCESS_TOKEN"])
+client = StravaIO(access_token=os.environ["ENV_STRAVA_ACCESS_TOKEN"])
 athlete = client.get_logged_in_athlete()
 activities = client.get_logged_in_athlete_activities(after=20170101)
 

@@ -4,6 +4,10 @@ trigger:
   
 pool:
   vmImage: 'ubuntu-latest'
+
+variables:
+  ENV_STRAVA_ACCESS_TOKEN: '$(STRAVA_ACCESS_TOKEN)'
+
 strategy:
   matrix:
     Python36:
