@@ -5,8 +5,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  ENV_STRAVA_ACCESS_TOKEN: '$(STRAVA_ACCESS_TOKEN)'
+#variables:
+#  ENV_STRAVA_ACCESS_TOKEN: '$(STRAVA_ACCESS_TOKEN)'
 
 strategy:
   matrix:
@@ -19,10 +19,10 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+#- script: |
+#    python -m pip install --upgrade pip
+#    pip install -r requirements.txt
+#  displayName: 'Install dependencies'
 
 - script: |
     python scripts/create_heatmap.py
