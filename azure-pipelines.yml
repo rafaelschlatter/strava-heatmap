@@ -19,14 +19,14 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
 
-#- script: |
-#    python -m pip install --upgrade pip
-#    pip install -r requirements.txt
-#  displayName: 'Install dependencies'
-
 - script: |
-    python scripts/create_heatmap.py
-  displayName: 'Build html heatmap'
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+#- script: |
+#    python scripts/create_heatmap.py
+#  displayName: 'Build html heatmap'
 
 - task: DockerInstaller@0
   inputs:
