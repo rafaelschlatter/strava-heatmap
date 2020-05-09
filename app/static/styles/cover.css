@@ -44,6 +44,7 @@ body {
   -moz-background-size: cover;
   background-size: cover, contain;
   -o-background-size: cover;
+  overflow-y: scroll;
 }
 
 .cover-container {
