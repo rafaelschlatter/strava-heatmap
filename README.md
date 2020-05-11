@@ -4,24 +4,35 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## About
-A flask web app that contains a static heatmap from GSP data from Strava activities.
+A flask web app that contains a static heatmap from GSP data from my Strava activities.
 
 ## Development
 Requirements:
-- Python 3.6,
+- Python 3.7 (i use 3.7 because the Azure app service that hosts this runs 3.7, but 3.5+ should also work),
 - Docker & an account at Docker hub
+- Azure subscription (I choose services that only incure a minimum cost for running this)
+
+Create a virtual environment and install the dependencies:
 ````
+pip install virtualenv
+virtualenv venv # venv or env are common names for virtual environments
+venv\scripts\activate # or source venv\bin\activate on mac/linux
 pip install -r requirements.txt
 ````
 
+You can run the app locally with (you might need to change the `host` and `port` when calling `app.run()`):
+````
+python application.py
+````
 
-## Build Docker image
-Build and push the Docker image:
+## Deployment with Docker & Azure app service
+### Build & push a container
+It is easiest to deploy the app as a docker container, build and push the Docker image with the following commands:
 ````
 docker login
 docker build -t rafaelschlatter/stravaheatmap:latest .
 docker push rafaelschlatter/stravaheatmap:latest
 ````
 
-## Host it on an Azure container instance
+### Host it on an Azure app service
 tba ...

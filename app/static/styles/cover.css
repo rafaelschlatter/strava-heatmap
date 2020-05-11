@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  min-height: 100%;
 }
 
 body {
@@ -35,15 +35,13 @@ body {
   display: flex;
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
 
 body {
-  background: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
+  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
   background-size: cover, contain;
-  -o-background-size: cover;
+  background-attachment: fixed;
+  overflow-y: scroll;
 }
 
 .cover-container {
