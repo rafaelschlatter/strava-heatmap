@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
+  <br/>
   <form  action="" method="post" role="form">
     {{ form.csrf }}
     <div class="form-group">
@@ -27,6 +29,8 @@
     </div>						   
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
+  <br/>
+</div>
 {% endblock %}
 
 {% block flash %}

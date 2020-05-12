@@ -27,7 +27,10 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  min-height: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -35,15 +38,14 @@ body {
   display: flex;
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
 
 body {
-  background: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover, contain;
-  -o-background-size: cover;
+  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .cover-container {
@@ -55,11 +57,14 @@ body {
  * Header
  */
 .masthead {
-  margin-bottom: 2rem;
-}
-
-.masthead-brand {
-  margin-bottom: 0;
+  background-color:rgba(60, 60, 60, .75);
+  margin-top: 0rem;
+  margin-left: -9999rem;
+  margin-right: -9999rem;
+  /* add back negative margin value */
+  padding-top: 0rem;
+  padding-left: 9999rem;
+  padding-right: 9999rem;
 }
 
 .nav-masthead .nav-link {
@@ -97,9 +102,6 @@ body {
 /*
  * Cover
  */
-.cover {
-  padding: 0 1.5rem;
-}
 .cover .btn-lg {
   padding: .75rem 1.25rem;
   font-weight: 700;
@@ -109,6 +111,14 @@ body {
 /*
  * Footer
  */
-.mastfoot {
+ .mastfoot {
   color: rgba(255, 255, 255, .5);
+  background-color: rgba(60, 60, 60, .75);
+  margin-bottom: 0rem;
+  margin-left: -9999rem;
+  margin-right: -9999rem;
+  /* add back negative margin value */
+  padding-bottom: 0rem;
+  padding-left: 9999rem;
+  padding-right: 9999rem;
 }
