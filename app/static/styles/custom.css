@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+body {
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  display: flex;
+  flex-flow: column;
+}
+
+.masthead {
+  background-color:rgba(40, 40, 40, .5);
+}
+
+footer{
+  margin-top: auto;
+  background-color:rgba(40, 40, 40, .5);
+}
