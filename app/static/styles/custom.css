@@ -1,0 +1,30 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+body {
+  margin-bottom: 55px; /* Margin bottom by footer height */
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+}
+
+.masthead {
+  background-color:rgba(40, 40, 40, .5);
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 55px; /* Set the fixed height of the footer here */
+  background-color:rgba(40, 40, 40, .5);
+}
