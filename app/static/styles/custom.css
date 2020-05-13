@@ -17,11 +17,25 @@ body {
   flex-flow: column;
 }
 
+.container {
+  max-width: 50rem;
+}
+
 .masthead {
-  background-color:rgba(40, 40, 40, .5);
+  background-color:rgba(40, 40, 40, .75);
+}
+
+.jumbotron {
+  background-color:rgba(160, 160, 160, 1);
 }
 
 footer{
   margin-top: auto;
-  background-color:rgba(40, 40, 40, .5);
+}
+
+hr {
+  height: 1px;
+  color: #fff;
+  background-color: #fff;
+  border: none;
 }
