@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <br/>
+<div class="jumbotron">
   <h1 class="cover-heading">A personal activity heatmap.</h1>
-  <br/>
   <p class="lead">Hi, my name is Rafael and I do some sports as a hobby. Mostly &#127939 and &#128692 in summer, and &#127938 in winter.</p>
-  <p class="lead">I use this small website to host my personal activity heatmap, based on my Strava data. Let me know your comments, critics and thoughts in the contact section.</p>
-  <p class="lead">There is a tutorial as well, in case you want to make & host your own. Cya &#128075</p>
-  <br/>
-  <p class="lead" style="text-align:center">
+  <hr>
+  <p class="my-4">I use this small website to host my personal activity heatmap, based on my Strava data. 
+    I like to code, so natuarlly I prefer to make this myself rather than paying for Strava's premium feature &#128513
+    Let me know your comments, critics and thoughts in the contact section. Feel free to open a pull request
+    or issue on GitHub as well.
+  </p>
+  <p class="my-4">There will be a tutorial soon, in case you want to make & host your own heatmap. Cya &#128075</p>
+  <p class="lead">
     <a href="{{ url_for('heatmap.heatmap') }}" class="btn btn btn-secondary">View map</a>
     <a href="https://github.com/rafaelschlatter/strava-heatmap" class="btn btn btn-primary"><span class="fa fa-github"></span> View source</a>
   </p>
-  <br/>
 </div>
 {% endblock %}
