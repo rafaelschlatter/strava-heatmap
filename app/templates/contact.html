@@ -1,41 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <a style="display:inline-block;background-color:#FC5200;color:#fff;padding:5px 10px 5px 30px;font-size:11px;font-family:Helvetica, Arial, sans-serif;white-space:nowrap;text-decoration:none;background-repeat:no-repeat;background-position:10px center;border-radius:3px;background-image:url('http://badges.strava.com/logo-strava-echelon.png')" href='http://strava.com/athletes/24969674' target="_clean">
-    Follow me on
-    <img src='http://badges.strava.com/logo-strava.png' alt='Strava' style='margin-left:2px;vertical-align:text-bottom' height=13 width=51 />
-  </a>
-</div>
 <br>
 <div class="container">
-  <form  action="" method="post" role="form">
-    {{ form.csrf }}
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
-      {% for error in form.name.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address.">
-      <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
-      {% for error in form.email.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>
-    <div class="form-group">
-      <label for="message">Message</label>
-      <textarea class="form-control" id="message" name="message" rows="3"></textarea>
-      {% for error in form.message.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>						   
-    <button type="submit" class="btn btn-success">Submit</button>
-  </form>
+  
 </div>
+
+<form  action="" method="post" role="form">
+  {{ form.csrf }}
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+    {% for error in form.name.errors %}
+      <small style="color: red;">{{ error }}</small>
+    {% endfor %}
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address">
+    <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
+    {% for error in form.email.errors %}
+      <small style="color: red;">{{ error }}</small>
+    {% endfor %}
+  </div>
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter a message"></textarea>
+    {% for error in form.message.errors %}
+      <small style="color: red;">{{ error }}</small>
+    {% endfor %}
+  </div>						   
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
 <br>
 {% endblock %}
 

@@ -13,25 +13,27 @@ body {
 }
 
 .masthead {
-  background-color:rgba(40, 40, 40, 1);
+  background-color:#24292e;
 }
 
 .jumbotron {
   background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center;
   background-size: cover;
-  background-attachment: fixed;
-  margin-left: -9999rem;
-  padding-left: 9999rem;
-  margin-right: -9999rem;
-  padding-right: 9999rem;
+  background-attachment: local;
+  margin-left: -999rem;
+  padding-left: 999rem;
+  margin-right: -999rem;
+  padding-right: 999rem;
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
 }
 
 footer{
   margin-top: auto;
+  background-color: #f6f8fa;
+
 }
 
 hr {
@@ -43,7 +45,7 @@ hr {
 
 .my-hr {
   height: 1px;
-  color: #fff;
-  background-color: #fff;
+  color: #c7c7c7;
+  background-color: #c7c7c7;
   border: none;
 }
