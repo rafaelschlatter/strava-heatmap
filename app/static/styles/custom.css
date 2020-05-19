@@ -22,10 +22,10 @@ body {
   background-position: center;
   background-size: cover;
   background-attachment: local;
-  margin-left: -999rem;
-  padding-left: 999rem;
-  margin-right: -999rem;
-  padding-right: 999rem;
+  margin-left: -500rem;
+  padding-left: 500rem;
+  margin-right: -500rem;
+  padding-right: 500rem;
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
 }
