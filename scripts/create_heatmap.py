@@ -1,11 +1,33 @@
 import os
+import requests
+import logging
+import json
 import folium
+import time
 from stravaio import StravaIO
 from stravaio import strava_oauth2
 from branca.element import Template, MacroElement
 
+if time.time() > int(os.environ["STRAVA_TOKEN_EXPIRES_AT"]):
+    logging.critical("Access token expired. Need to refresh token.")
+    
+    payload = {
+        "client_id": os.environ["STRAVA_CLIENT_ID"],
+        "client_secret": os.environ["STRAVA_CLIENT_SECRET"],
+        "grant_type": "refresh_token",
+        "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"]
+    }
 
-client = StravaIO(access_token=os.environ["ENV_STRAVA_ACCESS_TOKEN"])
+    response = requests.request("POST", "https://www.strava.com/api/v3/oauth/token", data=payload)
+    response_dict = json.loads(response.text)
+    
+    os.environ["STRAVA_ACCESS_TOKEN"] = response_dict["access_token"]
+    os.environ["STRAVA_REFRESH_TOKEN"] = response_dict["refresh_token"]
+    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = response_dict["expires_at"]
+else:
+    logging.critical("Access token still valid. Can use existing token.")
+
+client = StravaIO(access_token=os.environ["STRAVA_ACCESS_TOKEN"])
 athlete = client.get_logged_in_athlete()
 activities = client.get_logged_in_athlete_activities(after=20170101)
 
