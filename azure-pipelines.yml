@@ -23,6 +23,11 @@ steps:
 
 - script: |
     python scripts/create_heatmap.py
+  env:
+    STRAVA_ACCESS_TOKEN: $(strava.access.token)
+    STRAVA_CLIENT_ID: $(strava.client.id)
+    STRAVA_CLIENT_SECRET: $(strava.client.secret)
+    STRAVA_REFRESH_TOKEN: $(strava.refresh.token)
   displayName: 'Build html heatmap'
 
 - task: DockerInstaller@0
