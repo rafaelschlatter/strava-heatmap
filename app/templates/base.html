@@ -32,8 +32,17 @@
               <li class="nav-item">
                 <a class="nav-link disabled" href="#">Tutorial</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('contact.contact') }}">Contact</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Contact
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ url_for('contact.contact') }}">Contact me</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="https://github.com/rafaelschlatter">Me on GitHub</a>
+                  <a class="dropdown-item" href="https://www.strava.com/athletes/24969674">Me on Strava</a>
+                  <a class="dropdown-item" href="https://www.linkedin.com/in/rafaelschlatter/">Connect on LinkedIn</a>
+                </div>
               </li>
             </ul>
             <ul class="navbar-nav ml-auto">
