@@ -21,9 +21,9 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-#- script: |
-#    python scripts/create_heatmap.py
-#  displayName: 'Build html heatmap'
+- script: |
+    python scripts/create_heatmap.py
+  displayName: 'Build html heatmap'
 
 - task: DockerInstaller@0
   inputs:
