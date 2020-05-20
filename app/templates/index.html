@@ -1,19 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="jumbotron jumbotron-fluid">
-  <h1 class="cover-heading">A personal activity heatmap.</h1>
+<div class="jumbotron jumbotron-fluid float-md-center">
+  <h1 class="cover-heading">A personal activity heatmap</h1>
   <p class="lead">Hi, my name is Rafael and I do some sports as a hobby. Mostly &#127939 and &#128692 in summer, and &#127938 in winter.</p>
   <hr class="my-hr">
-  <p class="text-muted">I use this small website to host my <span style="color: #fff">personal activity heatmap</span>, based on my Strava data. 
-    I like to code, so naturally I prefer to make this myself rather than paying for <span style="color: #fff">Strava's premium feature</span> &#128513.
-    Let me know your comments, critics and thoughts in the contact section. Feel free to open a pull request
-    or issue on <span style="color: #fff">GitHub</span> as well.
+  <p class="lead text-muted">I use this small website to host my <span style="color: #fff">personal activity heatmap</span>, based on my Strava data. 
+    I like to code, so naturally I prefer to make this myself rather than paying for <span style="color: #fff">Strava's premium feature</span> &#128513
   </p>
-  <p class="text-muted">There will be a tutorial soon, in case you want to make & host your own heatmap. Cya &#128075</p>
   <p class="lead">
     <a href="{{ url_for('heatmap.heatmap') }}" class="btn btn-primary">View map</a>
-    <a href="https://github.com/rafaelschlatter/strava-heatmap" class="btn btn-secondary"><span class="fa fa-github"></span> View source</a>
+    <a href="https://github.com/rafaelschlatter/strava-heatmap" class="btn btn-outline-light"><span class="fa fa-github"></span> View source</a>
   </p>
 </div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted"><svg class="bi bi-question-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zM6.57 6.033H5.25C5.22 4.147 6.68 3.5 8.006 3.5c1.397 0 2.673.73 2.673 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.355H7.117l-.007-.463c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.901 0-1.358.603-1.358 1.384zm1.251 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z" clip-rule="evenodd"/>
+    </svg></h6>
+    <h5 class="card-title">Want to get in touch?</h5>
+    <p class="card-text">Feel free to ask a question, leave a comment, feedback or critic.</p>
+    <a href="{{ url_for('contact.contact') }}" class="btn btn-outline-primary">Contact me <span><svg class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"/>
+      <path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"/>
+    </svg></span></a>
+  </div>
+</div>
+
+<br>
 {% endblock %}
