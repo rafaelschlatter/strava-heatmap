@@ -4,7 +4,7 @@ trigger:
   
 schedules:
   - cron: "0 0 * * *"
-    displayName: Daily midnight build
+    displayName: 'Daily midnight build'
     branches:
       include:
         - master
@@ -42,7 +42,7 @@ steps:
 - task: DockerInstaller@0
   inputs:
     dockerVersion: '17.09.0-ce'
-  displayName: 'Install Docker cli
+  displayName: 'Install Docker cli'
 
 - task: Docker@2
   inputs:
@@ -51,11 +51,11 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
-  displayName: Build & push image to Docker hub
+  displayName: 'Build & push image to Docker hub'
 
 - task: AzureWebAppContainer@1
   inputs:
     azureSubscription: 'Pay-As-You-Go(7b125e82-6ca5-4623-87af-3df07832d24b)'
     appName: 'my-heatmap'
     containers: 'rafaelschlatter/stravaheatmap:latest'
-  displayName: Deploy container to App service
+  displayName: 'Deploy container to App service'
