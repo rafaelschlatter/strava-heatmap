@@ -21,9 +21,9 @@ if time.time() > int(os.environ["STRAVA_TOKEN_EXPIRES_AT"]):
     response = requests.request("POST", "https://www.strava.com/api/v3/oauth/token", data=payload)
     response_dict = json.loads(response.text)
     
-    os.environ["STRAVA_ACCESS_TOKEN"] = response_dict["access_token"]
-    os.environ["STRAVA_REFRESH_TOKEN"] = response_dict["refresh_token"]
-    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = response_dict["expires_at"]
+    os.environ["STRAVA_ACCESS_TOKEN"] = str(response_dict["access_token"]) 
+    os.environ["STRAVA_REFRESH_TOKEN"] = str(response_dict["refresh_token"]) 
+    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = str(response_dict["expires_at"]) 
 else:
     logging.critical("Access token still valid. Can use existing token.")
 
