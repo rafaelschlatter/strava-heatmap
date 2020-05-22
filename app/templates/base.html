@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href=https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/e97a1d5899.js" crossorigin="anonymous"></script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/custom.css') }}">
   </head>
 
@@ -12,9 +13,9 @@
 
     <header class="masthead">
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark style=background-color: transparent;">
+      <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
-          <a class="navbar-brand" href="https://www.strava.com/athletes/24969674">
+          <a class="navbar-brand" href="https://www.strava.com/">
             <img src="/static/api_logo_pwrdBy_strava_stack_white.png" height=35 alt="">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,14 +32,26 @@
               <li class="nav-item">
                 <a class="nav-link disabled" href="#">Tutorial</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('contact.contact') }}">Contact</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Contact
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ url_for('contact.contact') }}">Contact me</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="https://github.com/rafaelschlatter">Me on GitHub</a>
+                  <a class="dropdown-item" href="https://www.strava.com/athletes/24969674">Me on Strava</a>
+                  <a class="dropdown-item" href="https://www.linkedin.com/in/rafaelschlatter/">Connect on LinkedIn</a>
+                </div>
               </li>
             </ul>
-            <form class="form-inline mt-2 mt-md-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a href="{{ url_for('heatmap.heatmap') }}"><span><svg class="bi bi-map" title="View map" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M15.817.613A.5.5 0 0116 1v13a.5.5 0 01-.402.49l-5 1a.502.502 0 01-.196 0L5.5 14.51l-4.902.98A.5.5 0 010 15V2a.5.5 0 01.402-.49l5-1a.5.5 0 01.196 0l4.902.98 4.902-.98a.5.5 0 01.415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z" clip-rule="evenodd"/>
+                </svg></span></a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -52,12 +65,14 @@
     </main>
 
     <footer class="footer">
-      <div class="container">
-        <small class="text">&copy; 2020 Rafael Daniel Schlatter.</small>
+      <br>
+      <div class="container d-flex">
+        <small class="mr-auto p-2 text-muted">&copy; 2020 Rafael Daniel Schlatter. Licensed under the terms of the <a href="https://github.com/rafaelschlatter/strava-heatmap/blob/master/LICENSE.txt">MIT license.</a></small>
+        <small class="p-2 text-muted"><a href="https://github.com/rafaelschlatter"><i class="fa fa-github fa-lg" style="color:#91979e;" title="GitHub"></i></a></small>
+        <small class="p-2 text-muted"><a href="https://www.strava.com/athletes/24969674"><i class="fab fa-strava fa-lg" style="color:#91979e;" title="Strava"></i></a></small>
+        <small class="p-2 text-muted"><a href="https://www.linkedin.com/in/rafaelschlatter/"><i class="fa fa-linkedin fa-lg" style="color:#91979e;" title="LinkedIn"></i></a></small>
       </div>
-      <div class="container">
-        <small class="text-muted">This project is licensed under the terms of the <a href="https://github.com/rafaelschlatter/strava-heatmap/blob/master/LICENSE.txt">MIT license.</a></small>
-      </div>
+      <br>
     </footer>
     
 

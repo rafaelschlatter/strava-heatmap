@@ -1,27 +1,51 @@
 html, body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
-body {
-  color: #fff;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
   display: flex;
   flex-flow: column;
 }
 
+.container {
+  max-width: 50rem;
+}
+
 .masthead {
-  background-color:rgba(40, 40, 40, .5);
+  background-color:#24292e;
+}
+
+.jumbotron {
+  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: local;
+  margin-left: -150rem;
+  padding-left: 150rem;
+  margin-right: -150rem;
+  padding-right: 150rem;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
 }
 
 footer{
   margin-top: auto;
-  background-color:rgba(40, 40, 40, .5);
+  background-color: #f6f8fa;
+
+}
+
+hr {
+  height: 1px;
+  color: #000000;
+  background-color: #000000;
+  border: none;
+}
+
+.my-hr {
+  height: 1px;
+  color: #c7c7c7;
+  background-color: #c7c7c7;
+  border: none;
 }

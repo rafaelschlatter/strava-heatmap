@@ -1,35 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <br/>
-  <form  action="" method="post" role="form">
-    {{ form.csrf }}
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
-      {% for error in form.name.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address.">
-      <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
-      {% for error in form.email.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>
-    <div class="form-group">
-      <label for="message">Message</label>
-      <textarea class="form-control" id="message" name="message" rows="3"></textarea>
-      {% for error in form.message.errors %}
-        <small style="color: red;">{{ error }}</small>
-      {% endfor %}
-    </div>						   
-    <button type="submit" class="btn btn-success">Submit</button>
-  </form>
-  <br/>
+<br>
+<h2 class="cover-heading">Message me &#128075</h2>
+<p>Feel free to leave any kind of message, comments, critics, improvements. I appreciate all feedback. You can also open pull requests and issues on GitHub.</p>
+
+<div class="card mb-4 shadow-sm">
+  <div class="card-body">
+    <form  action="" method="post" role="form">
+      {{ form.csrf }}
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+        {% for error in form.name.errors %}
+          <small style="color: red;">{{ error }}</small>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Enter email address">
+        <small id="emailHelp" class="form-text text-muted">I never share your email with anyone.</small>
+        {% for error in form.email.errors %}
+          <small style="color: red;">{{ error }}</small>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea class="form-control" id="message" name="message" rows="3" placeholder="Enter a message"></textarea>
+        {% for error in form.message.errors %}
+          <small style="color: red;">{{ error }}</small>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.recaptcha }}
+        {% for error in form.recaptcha.errors %}
+          <small style="color: red;">{{ error }}</small>
+        {% endfor %}
+      </div>
+      
+      <div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    
+      <div class="form-group">
+      <small class ="text-muted">* These fields are required.</small>
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock %}
 
