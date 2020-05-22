@@ -21,6 +21,6 @@ def contact():
             )
             msg.body = message
             mail.send(msg)
-            flash("Thank you, {}. Your message has been sent.".format(name),"success")
+            flash("Thank you, {}. Your message has been sent.".format(name), "info")
 
     return render_template("contact.html", form=form)
