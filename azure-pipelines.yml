@@ -54,7 +54,7 @@ steps:
 
 - task: AzureWebAppContainer@1
   inputs:
-    azureSubscription: 'Pay-As-You-Go(7b125e82-6ca5-4623-87af-3df07832d24b)'
+    azureSubscription: $(azure.subscription.id)
     appName: 'my-heatmap'
     containers: 'rafaelschlatter/stravaheatmap:latest'
   displayName: 'Deploy container to App service'
