@@ -10,6 +10,9 @@ schedules:
         - master
     always: true
 
+variables:
+  AZURE_SUBSCRIPTION_ID: $(azure.subscription.id)
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -54,7 +57,7 @@ steps:
 
 - task: AzureWebAppContainer@1
   inputs:
-    azureSubscription: $(azure.subscription.id)
+    azureSubscription: $(AZURE_SUBSCRIPTION_ID) 
     appName: 'my-heatmap'
     containers: 'rafaelschlatter/stravaheatmap:latest'
   displayName: 'Deploy container to App service'
