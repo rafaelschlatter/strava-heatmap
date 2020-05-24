@@ -35,10 +35,10 @@ activities = client.get_logged_in_athlete_activities(after=20170101)
 
 m = folium.Map(
     name="Strava Heatmap",
-    tiles="cartodbdark_matter",
-    location=[59.925, 10.728123],
+    tiles='cartodbdark_matter',
+    location=[59.925,10.728123],
     zoom_start=11.5,
-    control_scale=True,
+    control_scale=True
 )
 
 template = """
@@ -60,9 +60,12 @@ template = """
 <div class='legend-title'>Activity type</div>
 <div class='legend-scale'>
   <ul class='legend-labels'>
-    <li><span style='background:#00ffff;opacity:0.7;'></span>Ski</li>
     <li><span style='background:#ff9933;opacity:0.7;'></span>Run</li>
-    <li><span style='background:#ff3399;opacity:0.7;'></span>Ride</li>
+    <li><span style='background:#f6ff00;opacity:0.7;'></span>Ice Skate</li>
+    <li><span style='background:#00ff55;opacity:0.7;'></span>Canoe</li>
+    <li><span style='background:#00ffff;opacity:0.7;'></span>Nordic Ski</li>
+    <li><span style='background:#00ccff;opacity:0.7;'></span>Alpine Ski</li>
+    <li><span style='background:#0066ff;opacity:0.7;'></span>Ride</li>
     <li><span style='background:#cc00ff;opacity:0.7;'></span>Other</li>
   </ul>
 </div>
@@ -129,18 +132,30 @@ for a in activities:
             ).add_to(m)
         elif a.type == "Ride":
             folium.PolyLine(
-                locations=points, color="#ff3399", opacity=1 / 2, weight=1
+                locations=points, color="#0066ff", opacity=1 / 2, weight=1
             ).add_to(m)
         elif a.type == "NordicSki":
             folium.PolyLine(
                 locations=points, color="#00ffff", opacity=1 / 2, weight=1
             ).add_to(m)
+        elif a.type == "AlpineSki":
+            folium.PolyLine(
+                locations=points, color="#00ccff", opacity=1 / 2, weight=1
+            ).add_to(m)
+        elif a.type == "Canoeing":
+            folium.PolyLine(
+                locations=points, color="#00ff55", opacity=1 / 2, weight=1
+            ).add_to(m)
+        elif a.type == "IceSkate":
+            folium.PolyLine(
+                locations=points, color="#f6ff00", opacity=1 / 2, weight=1
+            ).add_to(m)
         else:
             folium.PolyLine(
                 locations=points, color="#cc00ff", opacity=1 / 2, weight=1
             ).add_to(m)
-        print(a.id)
+        logging.critical("Mapped activity with id: {}".format(a.id))
     except:
-        pass
+        logging.error("Could not map activity with id: {}".format(a.id))
 
 m.save("app/templates/heatmap.html")
