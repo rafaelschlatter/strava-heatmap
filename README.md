@@ -40,13 +40,13 @@ This is running a flask web server for development, you should not run this in p
 It is easiest to deploy the app as a docker container. The container will start a gunicorn web server to run the application. Build and push the Docker image with the following commands:
 ````
 docker login
-docker build -t rafaelschlatter/stravaheatmap:latest .
-docker push rafaelschlatter/stravaheatmap:latest
+docker build -t <your_docker_user>/stravaheatmap:latest .
+docker push <your_docker_user>/stravaheatmap:latest
 ````
 
 Running & testing the container locally (passing environment variables with `-e`):
 ````
-docker run -p 5000:80 -e SECRET_KEY=<your_secret_key> -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> rafaelschlatter/stravaheatmap:latest
+docker run -p 5000:80 -e SECRET_KEY=<your_secret_key> -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> <your_docker_user>/stravaheatmap:latest
 ````
 
 Point a browser to <http://localhost:5000/> to see the containerized app running.
