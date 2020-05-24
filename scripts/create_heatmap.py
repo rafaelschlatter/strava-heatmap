@@ -10,20 +10,22 @@ from branca.element import Template, MacroElement
 
 if time.time() > int(os.environ["STRAVA_TOKEN_EXPIRES_AT"]):
     logging.critical("Access token expired. Need to refresh token.")
-    
+
     payload = {
         "client_id": os.environ["STRAVA_CLIENT_ID"],
         "client_secret": os.environ["STRAVA_CLIENT_SECRET"],
         "grant_type": "refresh_token",
-        "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"]
+        "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"],
     }
 
-    response = requests.request("POST", "https://www.strava.com/api/v3/oauth/token", data=payload)
+    response = requests.request(
+        "POST", "https://www.strava.com/api/v3/oauth/token", data=payload
+    )
     response_dict = json.loads(response.text)
-    
-    os.environ["STRAVA_ACCESS_TOKEN"] = str(response_dict["access_token"]) 
-    os.environ["STRAVA_REFRESH_TOKEN"] = str(response_dict["refresh_token"]) 
-    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = str(response_dict["expires_at"]) 
+
+    os.environ["STRAVA_ACCESS_TOKEN"] = str(response_dict["access_token"])
+    os.environ["STRAVA_REFRESH_TOKEN"] = str(response_dict["refresh_token"])
+    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = str(response_dict["expires_at"])
 else:
     logging.critical("Access token still valid. Can use existing token.")
 
@@ -33,10 +35,10 @@ activities = client.get_logged_in_athlete_activities(after=20170101)
 
 m = folium.Map(
     name="Strava Heatmap",
-    tiles='cartodbdark_matter',
-    location=[59.925,10.728123],
+    tiles="cartodbdark_matter",
+    location=[59.925, 10.728123],
     zoom_start=11.5,
-    control_scale=True
+    control_scale=True,
 )
 
 template = """
@@ -122,13 +124,21 @@ for a in activities:
     try:
         points = list(zip(streams.lat, streams.lng))
         if a.type == "Run":
-            folium.PolyLine(locations=points,color="#ff9933", opacity=1/2, weight=1).add_to(m)
+            folium.PolyLine(
+                locations=points, color="#ff9933", opacity=1 / 2, weight=1
+            ).add_to(m)
         elif a.type == "Ride":
-            folium.PolyLine(locations=points,color="#ff3399", opacity=1/2, weight=1).add_to(m)
+            folium.PolyLine(
+                locations=points, color="#ff3399", opacity=1 / 2, weight=1
+            ).add_to(m)
         elif a.type == "NordicSki":
-            folium.PolyLine(locations=points,color="#00ffff", opacity=1/2, weight=1).add_to(m)
+            folium.PolyLine(
+                locations=points, color="#00ffff", opacity=1 / 2, weight=1
+            ).add_to(m)
         else:
-            folium.PolyLine(locations=points,color="#cc00ff", opacity=1/2, weight=1).add_to(m)
+            folium.PolyLine(
+                locations=points, color="#cc00ff", opacity=1 / 2, weight=1
+            ).add_to(m)
         print(a.id)
     except:
         pass
