@@ -35,10 +35,10 @@ activities = client.get_logged_in_athlete_activities(after=20170101)
 
 m = folium.Map(
     name="Strava Heatmap",
-    tiles='cartodbdark_matter',
-    location=[59.925,10.728123],
+    tiles="cartodbdark_matter",
+    location=[59.925, 10.728123],
     zoom_start=11.5,
-    control_scale=True
+    control_scale=True,
 )
 
 template = """
