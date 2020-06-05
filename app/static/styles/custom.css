@@ -28,13 +28,12 @@ body {
   margin-right: -130rem;
   padding-right: 130rem;
   color: #fff;
-  text-shadow: 0 0.05rem .1rem rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
 }
 
 footer {
   margin-top: auto;
   background-color: #f6f8fa;
-
 }
 
 hr {

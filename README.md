@@ -1,5 +1,6 @@
 # Strava-heatmap
 [![Build Status](https://dev.azure.com/rafaelschlatter/strava-heatmap/_apis/build/status/rafaelschlatter.strava-heatmap?branchName=master)](https://dev.azure.com/rafaelschlatter/strava-heatmap/_build/latest?definitionId=17&branchName=master)
+[![Requirements Status](https://requires.io/github/rafaelschlatter/strava-heatmap/requirements.svg?branch=master)](https://requires.io/github/rafaelschlatter/strava-heatmap/requirements/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8aa61d5c6bd469a9e05073088d998d3)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rafaelschlatter/strava-heatmap&amp;utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -46,7 +47,7 @@ docker push <your_docker_user>/stravaheatmap:latest
 
 Running & testing the container locally (passing environment variables with `-e`):
 ````
-docker run -p 5000:80 -e SECRET_KEY=<your_secret_key> -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> <your_docker_user>/stravaheatmap:latest
+docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> <your_docker_user>/stravaheatmap:latest
 ````
 
 Point a browser to <http://localhost:5000/> to see the containerized app running.
