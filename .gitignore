@@ -4,7 +4,8 @@ notebooks
 .DS_Store
 .vscode
 .env
-*.PNG
+Capture.PNG
+close-up.PNG
 *.jpg
 *.pyc
 *__pycache__
