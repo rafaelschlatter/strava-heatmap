@@ -36,10 +36,13 @@ activities = client.get_logged_in_athlete_activities(after=20170101)
 m = folium.Map(
     name="Strava Heatmap",
     tiles="cartodbdark_matter",
-    location=[59.925, 10.728123],
+    location=[59.925,10.728123],
     zoom_start=11.5,
-    control_scale=True,
+    control_scale=True
 )
+folium.TileLayer("cartodbdark_matter").add_to(m)
+folium.TileLayer('cartodbpositron').add_to(m)
+folium.LayerControl().add_to(m)
 
 template = """
 {% macro html(this, kwargs) %}
@@ -55,7 +58,7 @@ template = """
 
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index:9999; border:1px solid grey; background-color:rgba(255, 255, 255, 0.8);
-     border-radius:6px; padding: 10px; font-size:15px; right: 13px; top: 11px;'>
+     border-radius:6px; padding: 10px; font-size:15px; right: 11px; top: 80px;'>
      
 <div class='legend-title'>Activity type</div>
 <div class='legend-scale'>

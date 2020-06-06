@@ -1,11 +1,18 @@
-# Strava-heatmap
+<a href="https://www.strava.com/">
+    <img src=app/static/api_logo_pwrdBy_strava_stack_light.png
+    alt="Strava" title="Strava" align="right" height="35" />
+</a>
+
+# A personal Strava Heatmap
 [![Build Status](https://dev.azure.com/rafaelschlatter/strava-heatmap/_apis/build/status/rafaelschlatter.strava-heatmap?branchName=master)](https://dev.azure.com/rafaelschlatter/strava-heatmap/_build/latest?definitionId=17&branchName=master)
 [![Requirements Status](https://requires.io/github/rafaelschlatter/strava-heatmap/requirements.svg?branch=master)](https://requires.io/github/rafaelschlatter/strava-heatmap/requirements/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8aa61d5c6bd469a9e05073088d998d3)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rafaelschlatter/strava-heatmap&amp;utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## About
-A flask web app that contains a static heatmap from GSP data from my Strava activities.
+A flask web app that contains a heatmap from GSP data from my Strava activities. The app is deployed once a day to keep the map up to date. 
+
+<img src="app/static/screenshot.png" alt="Screenshot" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"/>
 
 ## Development
 Requirements:
@@ -23,6 +30,9 @@ pip install -r requirements.txt
 ````
 
 The following environment variables are required to make use of all functionality:
+- `STRAVA_CLIENT_ID`
+- `STRAVA_CLIENT_SECRET`
+- `STRAVA_REFRESH_TOKEN`
 - `GMAIL_ADRESS`
 - `GMAIL_PW`
 - `RECAPTCHA_USE_SSL`
