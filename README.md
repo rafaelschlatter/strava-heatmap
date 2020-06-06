@@ -57,7 +57,10 @@ docker push <your_docker_user>/stravaheatmap:latest
 
 Running & testing the container locally (passing environment variables with `-e`):
 ````
-docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> <your_docker_user>/stravaheatmap:latest
+docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> \
+  -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> \
+  -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> \
+  <your_docker_user>/stravaheatmap:latest
 ````
 
 Point a browser to <http://localhost:5000/> to see the containerized app running.
