@@ -15,7 +15,8 @@
       <p style="font-size:18px" class="text-muted">I use this small website to host my <span
           style="color: #fff">personal activity heatmap</span>, based on my <span style="color: #fff">Strava
           data</span>.
-        The map is interactive (you can zoom and move around) and contains all my public activities since late 2017, colored by activity type &#128512
+        The map is <span style="color: #fff">interactive</span> (you can zoom and move around) and contains all my
+        public activities since late 2017, <span style="color: #fff">colored by activity type</span> &#128512.
       </p>
       <br>
       <p>
@@ -32,20 +33,20 @@
     <img class="rounded-circle" src="https://stravastatic.blob.core.windows.net/static/close-up.PNG"
       alt="Generic placeholder image" width="135" height="135" style="border:10px solid white">
     <h5>Want to create your own heatmap?</h5>
-    <p>If you are a Strava user, then you can map your activities as well. The button below will launch a notebook at <a href="https://mybinder.org/">mybinder.org</a>, with instructions on how to create your own heatmap (coming soon).</p>
-    <p><a class="btn btn-outline-primary" href="#" role="button">View tutorial <span><svg class="bi bi-arrow-right"
-            width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z"
-              clip-rule="evenodd" />
-            <path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd" />
-          </svg></span></a></p>
-  </div><!-- /.col-lg-4 -->
-</div><!-- /.row -->
+    <p class="text-muted">If you are a Strava user, then you can map your activities as well. The button below will
+      launch a notebook at <a href="https://colab.research.google.com/">Google Colab</a>, with instructions on how to
+      create your own heatmap (a Google account is required).</p>
+    <a
+      href="https://colab.research.google.com/github/rafaelschlatter/strava-heatmap/blob/master/examples/make_your_own.ipynb">
+      <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" />
+    </a>
+  </div>
+</div>
 
 <br>
+<br>
 
-<div class="card shadow-sm">
+<div class="card shadow">
   <div class="card-body">
     <h6 class="card-subtitle mb-2 text-muted"><svg class="bi bi-question-circle-fill" width="1em" height="1em"
         viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +55,7 @@
           clip-rule="evenodd" />
       </svg></h6>
     <h5 class="card-title">Want to get in touch?</h5>
-    <p class="card-text">Feel free to ask a question, leave a comment, feedback or critic.</p>
+    <p class="card-text text-muted">Feel free to ask a question, leave a comment, feedback or critic.</p>
     <a href="{{ url_for('contact.contact') }}" class="btn btn-outline-primary">Contact me <span><svg
           class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
           xmlns="http://www.w3.org/2000/svg">
