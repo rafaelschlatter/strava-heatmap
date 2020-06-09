@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
-  <fiv class="row">
+  <div class="row">
     <div class="col-6 mx-auto col-md-4 text-center order-md-2">
       <img src="{{ url_for('static',filename='track.svg') }}" style="width:90px;height:120px;" />
     </div>
@@ -25,7 +25,16 @@
             class="fa fa-github"></span> View on GitHub</a>
       </p>
     </div>
+  </div>
 </div>
+
+<div class="github-bar text-center" style="height: 40px;">
+  <iframe src="https://ghbtns.com/github-btn.html?user=rafaelschlatter&type=follow&count=true" frameborder="0"
+    scrolling="0" width="180" height="20" title="GitHub"></iframe>
+  <iframe src="https://ghbtns.com/github-btn.html?user=rafaelschlatter&repo=strava-heatmap&type=star&count=true"
+    frameborder="0" scrolling="0" width="80" height="20" title="GitHub"></iframe>
+  <iframe src="https://ghbtns.com/github-btn.html?user=rafaelschlatter&repo=strava-heatmapp&type=fork&count=true"
+    frameborder="0" scrolling="0" width="80" height="20" title="GitHub"></iframe>
 </div>
 
 <div class="row, text-center">
