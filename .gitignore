@@ -9,3 +9,4 @@ close-up.PNG
 *.jpg
 *.pyc
 *__pycache__
+examples/.ipynb_checkpoints
