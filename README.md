@@ -10,7 +10,9 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## About
-A flask web app that contains a heatmap from GSP data from my Strava activities. The app is deployed once a day to keep the map up to date. 
+A Flask web app that contains a heatmap from GSP data from my Strava activities.
+
+The app runs as a Docker container on Azure app service. The map is updated by the Azure pipeline, which runs a Python script that queries the Strava API to get coordinates from my activities and creates a map in HTML format. This file and the rest of the code are used to build & push an image to Docker Hub. The image is continuously deployed to the app service.
 
 <img src="app/static/screenshot.png" alt="Screenshot" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"/>
 
@@ -55,7 +57,7 @@ docker build -t <your_docker_user>/stravaheatmap:latest .
 docker push <your_docker_user>/stravaheatmap:latest
 ````
 
-Running & testing the container locally (passing environment variables with `-e`):
+Running & testing the container locally (passing environment variables with `-e`). This runs a gunicorn server, which can be used in production:
 ````
 docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> \
   -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> \
@@ -66,7 +68,13 @@ docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> \
 Point a browser to <http://localhost:5000/> to see the containerized app running.
 
 ### Host it on an Azure app service
-tba ...
+- Login to Azure and create a web app (app service), choose Docker container as publish and Linux as the operating system (gunicorn does not run on Windows) in the basics tab
+- In the Docker tab, choose single container and Docker Hub as the image source, choose public access type and provide the image name and tag (this includes your docker user name, e.g. `<your_docker_user>/stravaheatmap:latest`), no need to provide a startup command, since the Dockerfile already contains that
+- The remaining settings are up to you, click "Review and create"
+- Once created, in the container settings of your app service, enable continuous deployment
+
+If you update the image on Docker Hub, you need to restart the app service to pull the latest image.
+
 
 ## License
 This project is licensed under the the MIT license. See [LICENSE](LICENSE.txt) for details.
