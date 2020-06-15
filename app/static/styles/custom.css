@@ -10,7 +10,12 @@ body {
 }
 
 .container {
-  max-width: 50rem;
+  max-width: 55rem;
+}
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: #f6f8fa;
 }
 
 .masthead {
@@ -23,10 +28,10 @@ body {
   background-position: center;
   background-size: cover;
   background-attachment: local;
-  margin-left: -130rem;
-  padding-left: 130rem;
-  margin-right: -130rem;
-  padding-right: 130rem;
+  margin-left: -100rem;
+  padding-left: 100rem;
+  margin-right: -100rem;
+  padding-right: 100rem;
   margin-bottom: 0;
   color: #fff;
   text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
@@ -52,12 +57,35 @@ hr {
 }
 
 .github-bar {
-  margin-left: -130rem;
-  padding-left: 130rem;
-  margin-right: -130rem;
-  padding-right: 130rem;
+  margin-left: -999rem;
+  padding-left: 999rem;
+  margin-right: -999rem;
+  padding-right: 999rem;
   margin-bottom: 2rem;
   background-color: #f6f8fa;
   vertical-align: middle;
   line-height: 48px;
+}
+
+.icon {
+  color: #91979e
+}
+
+.icon:hover {
+  color: black;
+}
+
+@media screen {
+  .dropdown:hover .dropdown-menu, .btn-group:hover .dropdown-menu{
+		display: block;
+	}
+	.dropdown-menu{
+		margin-top: 0;
+	}
+	.dropdown-toggle{
+		margin-bottom: 2px;
+	}
+	.navbar .dropdown-toggle, .nav-tabs .dropdown-toggle{
+		margin-bottom: 0;
+	}
 }
