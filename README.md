@@ -9,14 +9,14 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8aa61d5c6bd469a9e05073088d998d3)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rafaelschlatter/strava-heatmap&amp;utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## About
-A Flask web app that contains a heatmap from GSP data from my Strava activities.
+## 1. About
+A Flask web app that contains a heatmap from GSP data from my Strava activities: <http://my-heatmap.azurewebsites.net/>.
 
-The app runs as a Docker container on Azure app service. The map is updated by the Azure pipeline, which runs a Python script that queries the Strava API to get coordinates from my activities and creates a map in HTML format. This file and the rest of the code are used to build & push an image to Docker Hub. The image is continuously deployed to the app service.
+The app runs a gunicorn server in a Docker container on Azure app service. The map is updated by an Azure pipeline, which runs a Python script that queries the Strava API to get coordinates from my activities and creates a map in HTML format. That file and the rest of the code are used to build & push an image to Docker Hub. The image (with the most recent map) is  deployed daily to the app service.
 
 <img src="app/static/screenshot.png" alt="Screenshot" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"/>
 
-## Development
+## 2. Development
 Requirements:
 - Python 3.7 (i use 3.7 because the Azure app service that hosts this runs 3.7, but 3.5+ should also work)
 - Docker & an account at Docker hub
@@ -41,15 +41,16 @@ The following environment variables are required to make use of all functionalit
 - `RECAPTCHA_PUBLIC_KEY`
 - `RECAPTCHA_PRIVATE_KEY`
 
-You can run the app locally with (you might want to change the `host` and `port` when calling `app.run()`):
+You can run the app locally by running these two commands sequentially (you might want to change the `host` and `port` when calling `app.run()`):
 ````
+python scripts/create_heatmap.py # this might take a couple of minutes
 python application.py
 ````
 This is running a flask web server for development, you should not run this in production. 
 
 
-## Deployment with Docker & Azure app service
-### Build & push a container
+## 3. Deployment with Docker & Azure app service
+### 3.1 Build & push a container
 It is easiest to deploy the app as a docker container. The container will start a gunicorn web server to run the application. Build and push the Docker image with the following commands:
 ````
 docker login
@@ -67,7 +68,7 @@ docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> \
 
 Point a browser to <http://localhost:5000/> to see the containerized app running.
 
-### Host it on an Azure app service
+### 3.2 Host it on an Azure app service
 - Login to Azure and create a web app (app service), choose Docker container as publish and Linux as the operating system (gunicorn does not run on Windows) in the basics tab
 - In the Docker tab, choose single container and Docker Hub as the image source, choose public access type and provide the image name and tag (this includes your docker user name, e.g. `<your_docker_user>/stravaheatmap:latest`), no need to provide a startup command, since the Dockerfile already contains that
 - The remaining settings are up to you, click "Review and create"

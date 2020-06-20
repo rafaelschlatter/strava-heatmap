@@ -8,119 +8,126 @@ from stravaio import StravaIO
 from stravaio import strava_oauth2
 from branca.element import Template, MacroElement
 
-if time.time() > int(os.environ["STRAVA_TOKEN_EXPIRES_AT"]):
-    logging.critical("Access token expired. Need to refresh token.")
 
-    payload = {
-        "client_id": os.environ["STRAVA_CLIENT_ID"],
-        "client_secret": os.environ["STRAVA_CLIENT_SECRET"],
-        "grant_type": "refresh_token",
-        "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"],
-    }
+def refresh_token():
+    if time.time() > int(os.environ["STRAVA_TOKEN_EXPIRES_AT"]):
+        logging.critical("Access token expired. Need to refresh token.")
 
-    response = requests.request(
-        "POST", "https://www.strava.com/api/v3/oauth/token", data=payload
+        payload = {
+            "client_id": os.environ["STRAVA_CLIENT_ID"],
+            "client_secret": os.environ["STRAVA_CLIENT_SECRET"],
+            "grant_type": "refresh_token",
+            "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"],
+        }
+
+        response = requests.request(
+            "POST", "https://www.strava.com/api/v3/oauth/token", data=payload
+        )
+        response.raise_for_status()
+        response_dict = json.loads(response.text)
+
+        os.environ["STRAVA_ACCESS_TOKEN"] = str(response_dict["access_token"])
+        os.environ["STRAVA_REFRESH_TOKEN"] = str(response_dict["refresh_token"])
+        os.environ["STRAVA_TOKEN_EXPIRES_AT"] = str(response_dict["expires_at"])
+    else:
+        logging.critical("Access token still valid. Can use existing token.")
+
+
+def initialize_map():
+    map = folium.Map(
+        name="Strava Heatmap",
+        tiles="cartodbpositron",
+        location=[59.925, 10.728123],
+        zoom_start=11.5,
+        control_scale=True,
     )
-    response_dict = json.loads(response.text)
+    folium.TileLayer("cartodbpositron").add_to(map)
+    folium.TileLayer("cartodbdark_matter").add_to(map)
+    folium.LayerControl().add_to(map)
 
-    os.environ["STRAVA_ACCESS_TOKEN"] = str(response_dict["access_token"])
-    os.environ["STRAVA_REFRESH_TOKEN"] = str(response_dict["refresh_token"])
-    os.environ["STRAVA_TOKEN_EXPIRES_AT"] = str(response_dict["expires_at"])
-else:
-    logging.critical("Access token still valid. Can use existing token.")
+    return map
 
-client = StravaIO(access_token=os.environ["STRAVA_ACCESS_TOKEN"])
-athlete = client.get_logged_in_athlete()
-activities = client.get_logged_in_athlete_activities(after=20170101)
 
-m = folium.Map(
-    name="Strava Heatmap",
-    tiles="cartodbpositron",
-    location=[59.925, 10.728123],
-    zoom_start=11.5,
-    control_scale=True,
-)
-folium.TileLayer("cartodbpositron").add_to(m)
-folium.TileLayer("cartodbdark_matter").add_to(m)
-folium.LayerControl().add_to(m)
+def add_html(map):
+    template = """
+    {% macro html(this, kwargs) %}
+    <!doctype html>
+    <html lang="en">
+    <body>
+    <div id='maplegend' class='maplegend' 
+        style='position: absolute; z-index:9999; border:0px solid grey;; background-color:rgba(255, 255, 255, 0.9);
+        border-radius:6px; padding: 0px; left: 50px; top: 11px;'>
+        
+    <div class='home-button'><a href="https://my-heatmap.azurewebsites.net/" class="btn btn-outline-dark">Back to home</a></div>
+    </div>
 
-template = """
-{% macro html(this, kwargs) %}
-<!doctype html>
-<html lang="en">
-<body>
-<div id='maplegend' class='maplegend' 
-    style='position: absolute; z-index:9999; border:0px solid grey;; background-color:rgba(255, 255, 255, 0.9);
-     border-radius:6px; padding: 0px; left: 50px; top: 11px;'>
-     
-<div class='home-button'><a href="https://my-heatmap.azurewebsites.net/" class="btn btn-outline-dark">Back to home</a></div>
-</div>
+    <div id='maplegend' class='maplegend' 
+        style='position: absolute; z-index:9999; border:1px solid grey; background-color:rgba(255, 255, 255, 0.8);
+        border-radius:6px; padding: 10px; font-size:15px; right: 11px; top: 80px;'>
+        
+    <div class='legend-title'>Activity type</div>
+    <div class='legend-scale'>
+    <ul class='legend-labels'>
+        <li><span style='background:#ff9933;opacity:0.7;'></span>Run</li>
+        <li><span style='background:#f6ff00;opacity:0.7;'></span>Ice Skate</li>
+        <li><span style='background:#00ff55;opacity:0.7;'></span>Canoe</li>
+        <li><span style='background:#00ffff;opacity:0.7;'></span>Nordic Ski</li>
+        <li><span style='background:#00ccff;opacity:0.7;'></span>Alpine Ski</li>
+        <li><span style='background:#0066ff;opacity:0.7;'></span>Ride</li>
+        <li><span style='background:#cc00ff;opacity:0.7;'></span>Other</li>
+    </ul>
+    </div>
+    </div>
 
-<div id='maplegend' class='maplegend' 
-    style='position: absolute; z-index:9999; border:1px solid grey; background-color:rgba(255, 255, 255, 0.8);
-     border-radius:6px; padding: 10px; font-size:15px; right: 11px; top: 80px;'>
-     
-<div class='legend-title'>Activity type</div>
-<div class='legend-scale'>
-  <ul class='legend-labels'>
-    <li><span style='background:#ff9933;opacity:0.7;'></span>Run</li>
-    <li><span style='background:#f6ff00;opacity:0.7;'></span>Ice Skate</li>
-    <li><span style='background:#00ff55;opacity:0.7;'></span>Canoe</li>
-    <li><span style='background:#00ffff;opacity:0.7;'></span>Nordic Ski</li>
-    <li><span style='background:#00ccff;opacity:0.7;'></span>Alpine Ski</li>
-    <li><span style='background:#0066ff;opacity:0.7;'></span>Ride</li>
-    <li><span style='background:#cc00ff;opacity:0.7;'></span>Other</li>
-  </ul>
-</div>
-</div>
+    </body>
+    </html>
 
-</body>
-</html>
+    <style type='text/css'>
+    .maplegend .legend-title {
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 90%;
+        }
+    .maplegend .legend-scale ul {
+        margin: 0;
+        margin-bottom: 5px;
+        padding: 0;
+        float: left;
+        list-style: none;
+        }
+    .maplegend .legend-scale ul li {
+        font-size: 80%;
+        list-style: none;
+        margin-left: 0;
+        line-height: 18px;
+        margin-bottom: 2px;
+        }
+    .maplegend ul.legend-labels li span {
+        display: block;
+        float: left;
+        height: 16px;
+        width: 30px;
+        margin-right: 5px;
+        margin-left: 0;
+        border: 1px solid #999;
+        }
+    .maplegend .legend-source {
+        font-size: 80%;
+        color: #777;
+        clear: both;
+        }
+    .maplegend a {
+        color: #777;
+        }
+    </style>
+    {% endmacro %}"""
 
-<style type='text/css'>
-  .maplegend .legend-title {
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 90%;
-    }
-  .maplegend .legend-scale ul {
-    margin: 0;
-    margin-bottom: 5px;
-    padding: 0;
-    float: left;
-    list-style: none;
-    }
-  .maplegend .legend-scale ul li {
-    font-size: 80%;
-    list-style: none;
-    margin-left: 0;
-    line-height: 18px;
-    margin-bottom: 2px;
-    }
-  .maplegend ul.legend-labels li span {
-    display: block;
-    float: left;
-    height: 16px;
-    width: 30px;
-    margin-right: 5px;
-    margin-left: 0;
-    border: 1px solid #999;
-    }
-  .maplegend .legend-source {
-    font-size: 80%;
-    color: #777;
-    clear: both;
-    }
-  .maplegend a {
-    color: #777;
-    }
-</style>
-{% endmacro %}"""
+    macro = MacroElement()
+    macro._template = Template(template)
+    map.get_root().add_child(macro)
 
-macro = MacroElement()
-macro._template = Template(template)
-m.get_root().add_child(macro)
+    return map
 
 
 def downsample(l, n):
@@ -138,7 +145,6 @@ def map_activities(activities, folium_map, opacity=0.5, weight=1):
         logging.info("No activities found, returning empty folium map.")
         return folium_map
 
-    counter = 0
     for a in activities:
         if a.type == "Workout":
             continue
@@ -181,6 +187,14 @@ def map_activities(activities, folium_map, opacity=0.5, weight=1):
     return folium_map
 
 
-m = map_activities(activities=activities, folium_map=m, opacity=0.5, weight=2)
-
-m.save("app/templates/heatmap.html")
+if __name__ == "__main__":
+    refresh_token()
+    client = StravaIO(access_token=os.environ["STRAVA_ACCESS_TOKEN"])
+    athlete = client.get_logged_in_athlete()
+    activities = client.get_logged_in_athlete_activities(after=20170101)
+    empty_map = initialize_map()
+    beautiful_map = add_html(map=empty_map)
+    activitiy_map = map_activities(
+        activities=activities, folium_map=beautiful_map, opacity=0.5, weight=2
+    )
+    activitiy_map.save("app/templates/heatmap.html")

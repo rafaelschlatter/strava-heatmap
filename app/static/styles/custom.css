@@ -23,7 +23,7 @@ body {
 }
 
 .jumbotron {
-  background-image: url('https://stravastatic.blob.core.windows.net/static/Capture_blur.jpg');
+  background-image: url('Capture_blur.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
