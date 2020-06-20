@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
   height: 100%;
   overflow-x: hidden;
 }
@@ -15,7 +14,7 @@ body {
 
 .navbar-nav .nav-item.active .nav-link,
 .navbar-nav .nav-item:hover .nav-link {
-    color: #f6f8fa;
+  color: #f6f8fa;
 }
 
 .masthead {
@@ -68,7 +67,7 @@ hr {
 }
 
 .icon {
-  color: #91979e
+  color: #91979e;
 }
 
 .icon:hover {
@@ -76,16 +75,21 @@ hr {
 }
 
 @media screen {
-  .dropdown:hover .dropdown-menu, .btn-group:hover .dropdown-menu{
-		display: block;
-	}
-	.dropdown-menu{
-		margin-top: 0;
-	}
-	.dropdown-toggle{
-		margin-bottom: 2px;
-	}
-	.navbar .dropdown-toggle, .nav-tabs .dropdown-toggle{
-		margin-bottom: 0;
-	}
+  .dropdown:hover .dropdown-menu,
+  .btn-group:hover .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu {
+    margin-top: 0;
+  }
+
+  .dropdown-toggle {
+    margin-bottom: 2px;
+  }
+
+  .navbar .dropdown-toggle,
+  .nav-tabs .dropdown-toggle {
+    margin-bottom: 0;
+  }
 }

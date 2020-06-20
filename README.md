@@ -24,7 +24,7 @@ Requirements:
 - Account at Google reCAPTCHA
 
 Create a virtual environment and install the dependencies:
-````
+````bash
 pip install virtualenv
 virtualenv venv # venv or env are common names for virtual environments
 venv\scripts\activate # or source venv\bin\activate on mac/linux
@@ -42,7 +42,7 @@ The following environment variables are required to make use of all functionalit
 - `RECAPTCHA_PRIVATE_KEY`
 
 You can run the app locally by running these two commands sequentially (you might want to change the `host` and `port` when calling `app.run()`):
-````
+````bash
 python scripts/create_heatmap.py # this might take a couple of minutes
 python application.py
 ````
@@ -52,14 +52,14 @@ This is running a flask web server for development, you should not run this in p
 ## 3. Deployment with Docker & Azure app service
 ### 3.1 Build & push a container
 It is easiest to deploy the app as a docker container. The container will start a gunicorn web server to run the application. Build and push the Docker image with the following commands:
-````
+````bash
 docker login
 docker build -t <your_docker_user>/stravaheatmap:latest .
 docker push <your_docker_user>/stravaheatmap:latest
 ````
 
 Running & testing the container locally (passing environment variables with `-e`). This runs a gunicorn server, which can be used in production:
-````
+````bash
 docker run -p 5000:8080 -e SECRET_KEY=<your_secret_key> \
   -e GMAIL_ADRESS=<your_gmail_adress> -e GMAIL_PW=<your_gmail_pw> \
   -e RECAPTCHA_PRIVATE_KEY=<your_private_key> -e RECAPTCHA_PUBLIC_KEY=<your_public_key> \
