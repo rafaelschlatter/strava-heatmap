@@ -6,7 +6,6 @@ notebooks
 .vscode
 .env
 Capture.PNG
-close-up.PNG
 *.pyc
 *__pycache__
 examples/.ipynb_checkpoints
