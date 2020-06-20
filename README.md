@@ -75,5 +75,5 @@ Point a browser to <http://localhost:5000/> to see the containerized app running
 
 If you update the image on Docker Hub, you need to restart the app service to pull the latest image.
 
-## License
+## 4. License
 This project is licensed under the the MIT license. See [LICENSE](LICENSE.txt) for details.
