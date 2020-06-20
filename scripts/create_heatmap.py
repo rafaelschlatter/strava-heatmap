@@ -2,10 +2,10 @@ import os
 import requests
 import logging
 import json
-import folium
 import time
+import folium
+from folium.plugins import HeatMap, LocateControl
 from stravaio import StravaIO
-from stravaio import strava_oauth2
 from branca.element import Template, MacroElement
 
 
@@ -33,22 +33,7 @@ def refresh_token():
         logging.critical("Access token still valid. Can use existing token.")
 
 
-def initialize_map():
-    map = folium.Map(
-        name="Strava Heatmap",
-        tiles="cartodbpositron",
-        location=[59.925, 10.728123],
-        zoom_start=11.5,
-        control_scale=True,
-    )
-    folium.TileLayer("cartodbpositron").add_to(map)
-    folium.TileLayer("cartodbdark_matter").add_to(map)
-    folium.LayerControl().add_to(map)
-
-    return map
-
-
-def add_html(map):
+def add_html(m):
     template = """
     {% macro html(this, kwargs) %}
     <!doctype html>
@@ -63,7 +48,7 @@ def add_html(map):
 
     <div id='maplegend' class='maplegend' 
         style='position: absolute; z-index:9999; border:1px solid grey; background-color:rgba(255, 255, 255, 0.8);
-        border-radius:6px; padding: 10px; font-size:15px; right: 11px; top: 80px;'>
+        border-radius:6px; padding: 10px; font-size:15px; right: 11px; top: 150px;'>
         
     <div class='legend-title'>Activity type</div>
     <div class='legend-scale'>
@@ -125,9 +110,9 @@ def add_html(map):
 
     macro = MacroElement()
     macro._template = Template(template)
-    map.get_root().add_child(macro)
+    m.get_root().add_child(macro)
 
-    return map
+    return m
 
 
 def downsample(l, n):
@@ -140,51 +125,102 @@ def downsample(l, n):
     return l[0::n]
 
 
-def map_activities(activities, folium_map, opacity=0.5, weight=1):
-    if len(activities) == 0:
-        logging.info("No activities found, returning empty folium map.")
-        return folium_map
-
+def download_data(activities, reduce_sample=True):
+    data = []
     for a in activities:
         if a.type == "Workout":
             continue
         streams = client.get_activity_streams(a.id, athlete.id)
         try:
             points = list(zip(streams.lat, streams.lng))
-            points = downsample(l=points, n=2)
-            if a.type == "Run":
-                folium.PolyLine(
-                    locations=points, color="#ff9933", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            elif a.type == "Ride":
-                folium.PolyLine(
-                    locations=points, color="#0066ff", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            elif a.type == "NordicSki":
-                folium.PolyLine(
-                    locations=points, color="#00ffff", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            elif a.type == "AlpineSki":
-                folium.PolyLine(
-                    locations=points, color="#00ccff", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            elif a.type == "Canoeing":
-                folium.PolyLine(
-                    locations=points, color="#00ff55", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            elif a.type == "IceSkate":
-                folium.PolyLine(
-                    locations=points, color="#f6ff00", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            else:
-                folium.PolyLine(
-                    locations=points, color="#cc00ff", opacity=opacity, weight=weight
-                ).add_to(folium_map)
-            logging.critical("Mapped activity with id: {}".format(a.id))
+            if reduce_sample:
+                points = downsample(l=points, n=2)
+            activity = {"id": a.id, "type": a.type, "coordinates": points}
+            data.append(activity)
+            logging.critical("Downloaded activity with id: {}".format(a.id))
         except Exception:
-            logging.error("Could not map activity with id: {}".format(a.id))
+            logging.error("Failed to download activity with id: {}".format(a.id))
 
-    return folium_map
+    return data
+
+
+def create_activity_layer(activities, opacity=0.5, weight=1):
+    activity_layer = folium.FeatureGroup(name="Activities", show=True, overlay=True)
+
+    if len(activities) == 0:
+        logging.info("No activities found, returning empty folium map.")
+        return None
+
+    data = []
+    for a in activities:
+        if a["type"] == "Workout":
+            continue
+
+        if a["type"] == "Run":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#ff9933",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "Ride":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#0066ff",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "NordicSki":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#00ffff",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "AlpineSki":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#00ccff",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "Canoeing":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#00ff55",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "IceSkate":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#f6ff00",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        else:
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#cc00ff",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+    logging.critical("Successfully created activity layer.")
+
+    return activity_layer
+
+
+def create_heatmap_layer(data, radius=5, blur=5):
+    heatmap_layer = folium.FeatureGroup(name="Heatmap", show=False, overlay=True)
+    heatmap_data = []
+    for activity in data:
+        heatmap_data.append(activity["coordinates"])
+
+    flat_list = [item for sublist in heatmap_data for item in sublist]
+    HeatMap(data=flat_list, radius=radius, blur=blur,).add_to(heatmap_layer)
+    logging.critical("Successfully created heatmap layer.")
+
+    return heatmap_layer
 
 
 if __name__ == "__main__":
@@ -192,9 +228,25 @@ if __name__ == "__main__":
     client = StravaIO(access_token=os.environ["STRAVA_ACCESS_TOKEN"])
     athlete = client.get_logged_in_athlete()
     activities = client.get_logged_in_athlete_activities(after=20170101)
-    empty_map = initialize_map()
-    beautiful_map = add_html(map=empty_map)
-    activitiy_map = map_activities(
-        activities=activities, folium_map=beautiful_map, opacity=0.5, weight=2
+
+    data = download_data(activities=activities, reduce_sample=True)
+    activity_layer = create_activity_layer(activities=data, opacity=0.5, weight=2)
+    heatmap_layer = create_heatmap_layer(data=data, radius=5, blur=5)
+
+    m = folium.Map(
+        name="Strava Heatmap",
+        tiles="cartodbpositron",
+        location=[59.925, 10.728123],
+        zoom_start=11.5,
+        control_scale=True,
     )
-    activitiy_map.save("app/templates/heatmap.html")
+    m = add_html(m)
+    
+    folium.TileLayer("cartodbpositron").add_to(m)
+    folium.TileLayer("cartodbdark_matter").add_to(m)
+    # heatmap_layer.add_to(m)
+    activity_layer.add_to(m)
+    LocateControl().add_to(m)
+    folium.LayerControl().add_to(m)
+
+    m.save("app/templates/heatmap.html")

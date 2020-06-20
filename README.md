@@ -48,7 +48,6 @@ python application.py
 ````
 This is running a flask web server for development, you should not run this in production. 
 
-
 ## 3. Deployment with Docker & Azure app service
 ### 3.1 Build & push a container
 It is easiest to deploy the app as a docker container. The container will start a gunicorn web server to run the application. Build and push the Docker image with the following commands:
@@ -75,7 +74,6 @@ Point a browser to <http://localhost:5000/> to see the containerized app running
 - Once created, in the container settings of your app service, enable continuous deployment
 
 If you update the image on Docker Hub, you need to restart the app service to pull the latest image.
-
 
 ## License
 This project is licensed under the the MIT license. See [LICENSE](LICENSE.txt) for details.
