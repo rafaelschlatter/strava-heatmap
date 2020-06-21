@@ -3,6 +3,9 @@ LABEL maintainer="rafaelschlatter@gmail.com"
 RUN useradd -ms /bin/bash myuser
 WORKDIR /app
 COPY . /app
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y gcc
 RUN python -m venv venv
 RUN venv/bin/pip install --upgrade pip
 RUN venv/bin/pip install -r requirements.txt
