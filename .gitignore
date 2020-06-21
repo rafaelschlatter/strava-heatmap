@@ -9,3 +9,4 @@ Capture.PNG
 *.pyc
 *__pycache__
 examples/.ipynb_checkpoints
+app/templates/heatmap.html

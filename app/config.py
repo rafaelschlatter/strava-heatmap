@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    ENV = os.environ.get("ENV")
+
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465
     MAIL_USE_TLS = False
@@ -14,3 +14,5 @@ class Config(object):
     RECAPTCHA_USE_SSL = True
     RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
     RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+
+    APPINSIGHTS_INSTRUMENTATIONKEY = os.environ.get("APPINSIGHTS_INSTRUMENTATIONKEY")
