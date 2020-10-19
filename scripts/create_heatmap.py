@@ -134,7 +134,7 @@ def download_data(activities, reduce_sample=True):
         try:
             points = list(zip(streams.lat, streams.lng))
             if reduce_sample:
-                points = downsample(l=points, n=2)
+                points = downsample(l=points, n=4)
             activity = {"id": a.id, "type": a.type, "coordinates": points}
             data.append(activity)
             logging.critical("Downloaded activity with id: {}".format(a.id))
