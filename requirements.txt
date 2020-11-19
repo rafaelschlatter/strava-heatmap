@@ -1,7 +1,7 @@
 ﻿Flask==1.1.1
 Flask-WTF==0.14.3
 Flask-Mail==0.9.1
-email-validator==1.1.1
+email-validator==1.1.2
 folium==0.11.0
 branca==0.4.1
 stravaio==0.0.9
