@@ -2,7 +2,7 @@
 Flask-WTF==0.14.3
 Flask-Mail==0.9.1
 email-validator==1.1.2
-folium==0.11.0
+folium==0.12.0
 branca==0.4.2
 stravaio==0.0.9
 gunicorn==20.0.4
