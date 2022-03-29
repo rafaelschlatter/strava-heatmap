@@ -7,3 +7,4 @@ branca==0.4.2
 stravaio==0.0.9
 gunicorn==20.1.0
 itsdangerous==2.0.1
+Jinja2<3.1
