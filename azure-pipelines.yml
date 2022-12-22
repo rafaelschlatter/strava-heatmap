@@ -18,8 +18,8 @@ pool:
 
 strategy:
   matrix:
-    Python36:
-      python.version: '3.6'
+    Python39:
+      python.version: '3.9'
 
 steps:
 - task: UsePythonVersion@0
@@ -43,7 +43,7 @@ steps:
 
 - task: DockerInstaller@0
   inputs:
-    dockerVersion: '17.09.0-ce'
+    dockerVersion: '20.10.11'
   displayName: 'Install Docker cli'
 
 - task: Docker@2
