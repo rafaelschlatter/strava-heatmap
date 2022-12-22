@@ -9,6 +9,9 @@ schedules:
         - master
     always: true
 
+variables:
+  AZURE_SUBSCRIPTION_ID: $(azure.subscription.id)
+
 jobs:
 - job: 'build'
   timeoutInMinutes: 180
@@ -18,8 +21,6 @@ jobs:
     matrix:
       Python39:
         python.version: '3.9'
-  variables:
-    AZURE_SUBSCRIPTION_ID: $(azure.subscription.id)
   steps:
   - task: UsePythonVersion@0
     displayName: 'Use Python $(python.version)'
