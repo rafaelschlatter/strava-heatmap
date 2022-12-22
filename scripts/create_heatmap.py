@@ -131,7 +131,7 @@ def download_data(activities, reduce_sample=True):
         if a.type == "Workout":
             continue
         streams = client.get_activity_streams(a.id, athlete.id)
-        time.sleep(15) # trying to circumvent Strava api limits
+        time.sleep(5) # trying to circumvent Strava api limits
         try:
             points = list(zip(streams.lat, streams.lng))
             if reduce_sample:

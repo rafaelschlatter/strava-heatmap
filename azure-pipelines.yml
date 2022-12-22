@@ -1,6 +1,5 @@
 trigger:
   - master
-  - dev
   
 schedules:
   - cron: "0 0 * * *"
@@ -10,54 +9,54 @@ schedules:
         - master
     always: true
 
-variables:
-  AZURE_SUBSCRIPTION_ID: $(azure.subscription.id)
+jobs:
+- job: 'build'
+  timeoutInMinutes: 180
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    matrix:
+      Python39:
+        python.version: '3.9'
+  variables:
+    AZURE_SUBSCRIPTION_ID: $(azure.subscription.id)
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
 
-pool:
-  vmImage: 'ubuntu-latest'
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
 
-strategy:
-  matrix:
-    Python39:
-      python.version: '3.9'
+  - script: |
+      python scripts/create_heatmap.py
+    env:
+      STRAVA_ACCESS_TOKEN: $(strava.access.token)
+      STRAVA_CLIENT_ID: $(strava.client.id)
+      STRAVA_CLIENT_SECRET: $(strava.client.secret)
+      STRAVA_REFRESH_TOKEN: $(strava.refresh.token)
+    displayName: 'Build html heatmap'
 
-steps:
-- task: UsePythonVersion@0
-  displayName: 'Use Python $(python.version)'
-  inputs:
-    versionSpec: '$(python.version)'
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '20.10.11'
+    displayName: 'Install Docker cli'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker-connection'
+      repository: 'rafaelschlatter/stravaheatmap'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: 'latest'
+    displayName: 'Build & push image to Docker hub'
 
-- script: |
-    python scripts/create_heatmap.py
-  env:
-    STRAVA_ACCESS_TOKEN: $(strava.access.token)
-    STRAVA_CLIENT_ID: $(strava.client.id)
-    STRAVA_CLIENT_SECRET: $(strava.client.secret)
-    STRAVA_REFRESH_TOKEN: $(strava.refresh.token)
-  displayName: 'Build html heatmap'
-
-- task: DockerInstaller@0
-  inputs:
-    dockerVersion: '20.10.11'
-  displayName: 'Install Docker cli'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'docker-connection'
-    repository: 'rafaelschlatter/stravaheatmap'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: 'latest'
-  displayName: 'Build & push image to Docker hub'
-
-- task: AzureWebAppContainer@1
-  inputs:
-    azureSubscription: $(AZURE_SUBSCRIPTION_ID) 
-    appName: 'my-heatmap'
-    containers: 'rafaelschlatter/stravaheatmap:latest'
-  displayName: 'Deploy container to App service'
+  - task: AzureWebAppContainer@1
+    inputs:
+      azureSubscription: $(AZURE_SUBSCRIPTION_ID) 
+      appName: 'my-heatmap'
+      containers: 'rafaelschlatter/stravaheatmap:latest'
+    displayName: 'Deploy container to App service'
