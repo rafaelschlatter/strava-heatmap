@@ -8,5 +8,5 @@ stravaio==0.0.9
 gunicorn==20.1.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
-werkzeug==2.0.3
+werkzeug==3.0.3
 numpy>=1.22.2 # not directly required, pinned by Snyk to avoid a vulnerability
