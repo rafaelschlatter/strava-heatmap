@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.14.0a3-slim
 LABEL maintainer="rafaelschlatter@gmail.com"
 RUN useradd -ms /bin/bash myuser
 WORKDIR /app
