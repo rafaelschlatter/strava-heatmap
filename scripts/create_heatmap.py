@@ -178,6 +178,13 @@ def create_activity_layer(activities, opacity=0.5, weight=1):
                 opacity=opacity,
                 weight=weight,
             ).add_to(activity_layer)
+        elif a["type"] == "RollerSki":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#ff6600",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
         elif a["type"] == "AlpineSki":
             folium.PolyLine(
                 locations=a["coordinates"],
