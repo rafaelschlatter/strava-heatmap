@@ -153,7 +153,7 @@ def download_data(activities, reduce_sample=True):
             blob_data = blob_client.download_blob().readall()
             streams_dict = json.loads(blob_data)
             streams = streams_obj_from_dict(streams_dict)
-            logging.critical(f"Loaded streams for activity {a.id} from Azure Blob Storage.")
+            logging.critical(f"Activity exists in storage, loaded activity {a.id} from Azure Blob Storage.")
         except Exception:
             streams = client.get_activity_streams(a.id, athlete.id)
             save_streams_to_azure_blob(
@@ -163,7 +163,7 @@ def download_data(activities, reduce_sample=True):
                 connection_string=connection_string
             )
             time.sleep(12) # trying to circumvent Strava api limits
-            logging.critical(f"Downloaded and saved streams for activity {a.id}.")
+            logging.critical(f"Activity does not exists in storage, downloaded and activity {a.id} from Strava api.")
 
         try:
             points = list(zip(streams.lat, streams.lng))
