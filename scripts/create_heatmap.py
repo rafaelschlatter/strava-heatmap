@@ -58,6 +58,7 @@ def add_html(m):
         <li><span style='background:#f6ff00;opacity:0.7;'></span>Ice Skate</li>
         <li><span style='background:#00ff55;opacity:0.7;'></span>Canoe</li>
         <li><span style='background:#00ffff;opacity:0.7;'></span>Nordic Ski</li>
+        <li><span style='background:#ff5100;opacity:0.7;'></span>Roller Ski</li>
         <li><span style='background:#00ccff;opacity:0.7;'></span>Alpine Ski</li>
         <li><span style='background:#0066ff;opacity:0.7;'></span>Ride</li>
         <li><span style='background:#cc00ff;opacity:0.7;'></span>Other</li>
@@ -214,7 +215,7 @@ def create_activity_layer(activities, opacity=0.5, weight=1):
         elif a["type"] == "RollerSki":
             folium.PolyLine(
                 locations=a["coordinates"],
-                color="#ff6600",
+                color="#ff5100",
                 opacity=opacity,
                 weight=weight,
             ).add_to(activity_layer)
