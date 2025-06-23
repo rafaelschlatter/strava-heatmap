@@ -7,6 +7,7 @@ import folium
 from folium.plugins import HeatMap, LocateControl
 from stravaio import StravaIO
 from branca.element import Template, MacroElement
+from azure.storage.blob import BlobServiceClient
 
 
 def refresh_token():
@@ -125,22 +126,54 @@ def downsample(l, n):
     return l[0::n]
 
 
+def streams_obj_from_dict(d):
+    class StreamsObj:
+        def __init__(self, d):
+            self.lat = d.get("lat", [])
+            self.lng = d.get("lng", [])
+    return StreamsObj(d)
+
+
 def download_data(activities, reduce_sample=True):
     data = []
+    container_name = "stravaactivities"
+    connection_string = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+
     for a in activities:
         if a.type == "Workout":
             continue
-        streams = client.get_activity_streams(a.id, athlete.id)
-        time.sleep(12) # trying to circumvent Strava api limits
+
+        blob_name = f"{a.id}.json"
+        blob_client = container_client.get_blob_client(blob_name)
+
+        try:
+            blob_client.get_blob_properties()
+            blob_data = blob_client.download_blob().readall()
+            streams_dict = json.loads(blob_data)
+            streams = streams_obj_from_dict(streams_dict)
+            logging.critical(f"Activity exists in storage, loaded activity {a.id} from Azure Blob Storage.")
+        except Exception:
+            streams = client.get_activity_streams(a.id, athlete.id)
+            save_streams_to_azure_blob(
+                streams,
+                container_name=container_name,
+                blob_name=blob_name,
+                connection_string=connection_string
+            )
+            time.sleep(12) # trying to circumvent Strava api limits
+            logging.critical(f"Activity does not exists in storage, downloaded and activity {a.id} from Strava api.")
+
         try:
             points = list(zip(streams.lat, streams.lng))
             if reduce_sample:
                 points = downsample(l=points, n=4)
             activity = {"id": a.id, "type": a.type, "coordinates": points}
             data.append(activity)
-            logging.critical("Downloaded activity with id: {}".format(a.id))
+            logging.critical("Processed activity with id: {}".format(a.id))
         except Exception:
-            logging.error("Failed to download activity with id: {}".format(a.id))
+            logging.error("Failed to process activity with id: {}".format(a.id))
 
     return data
 
@@ -175,6 +208,13 @@ def create_activity_layer(activities, opacity=0.5, weight=1):
             folium.PolyLine(
                 locations=a["coordinates"],
                 color="#00ffff",
+                opacity=opacity,
+                weight=weight,
+            ).add_to(activity_layer)
+        elif a["type"] == "RollerSki":
+            folium.PolyLine(
+                locations=a["coordinates"],
+                color="#ff6600",
                 opacity=opacity,
                 weight=weight,
             ).add_to(activity_layer)
@@ -222,6 +262,30 @@ def create_heatmap_layer(data, radius=5, blur=5):
     logging.critical("Successfully created heatmap layer.")
 
     return heatmap_layer
+
+
+def save_streams_to_azure_blob(streams, container_name, blob_name, connection_string):
+    """
+    Saves the streams dictionary as a JSON file to Azure Blob Storage.
+
+    :param streams: The data to save (dict).
+    :param container_name: The Azure Blob Storage container name.
+    :param blob_name: The name for the blob (e.g., 'streams.json').
+    :param connection_string: Azure Storage account connection string.
+    """
+    # Serialize streams to JSON
+    json_data = json.dumps(streams.to_dict(), indent=4)
+    
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
+    
+    try:
+        container_client.create_container()
+    except Exception:
+        pass  # Container likely exists
+
+    blob_client = container_client.get_blob_client(blob_name)
+    blob_client.upload_blob(json_data, overwrite=True)
 
 
 if __name__ == "__main__":
