@@ -191,6 +191,9 @@ def create_activity_layer(activities, opacity=0.5, weight=1):
         if a["type"] == "Workout":
             continue
 
+        if not a.get("coordinates"):
+            continue
+
         if a["type"] == "Run":
             folium.PolyLine(
                 locations=a["coordinates"],
